@@ -1,0 +1,106 @@
+<?php
+require_once 'includes/header.php';
+
+$student_id = $_SESSION['user_id'];
+
+// Get student's class
+$stmt = $pdo->prepare("SELECT class_id FROM enrollments WHERE student_id = ?");
+$stmt->execute([$student_id]);
+$enrollment = $stmt->fetch();
+$class_id = $enrollment ? $enrollment['class_id'] : null;
+
+$timetable = [];
+
+if ($class_id) {
+    $stmt = $pdo->prepare("
+        SELECT t.*, s.name as subject_name, s.code as subject_code, 
+               te.first_name, te.last_name 
+        FROM timetable t
+        LEFT JOIN subjects s ON t.subject_id = s.id
+        LEFT JOIN teachers te ON t.teacher_id = te.id
+        WHERE t.class_id = ?
+        ORDER BY FIELD(t.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'), t.period_number
+    ");
+    $stmt->execute([$class_id]);
+    $results = $stmt->fetchAll();
+    
+    foreach ($results as $row) {
+        $timetable[$row['day']][$row['period_number']] = $row;
+    }
+}
+
+$days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+$periods = [1, 2, 3, 4, 5, 6, 7];
+
+$default_timings = [
+    1 => ['09:00', '09:50'],
+    2 => ['09:50', '10:40'],
+    3 => ['10:50', '11:40'],
+    4 => ['11:40', '12:30'],
+    5 => ['13:30', '14:20'],
+    6 => ['14:20', '15:10'],
+    7 => ['15:20', '16:10']
+];
+?>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">My Timetable</h1>
+</div>
+
+<?php if (!$class_id): ?>
+    <div class="alert alert-warning">
+        You are not enrolled in any class yet. Please contact the administration.
+    </div>
+<?php else: ?>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered text-center align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Day / Period</th>
+                            <?php foreach ($periods as $p): ?>
+                                <th>
+                                    Period <?php echo $p; ?><br>
+                                    <small class="text-muted"><?php echo $default_timings[$p][0] . ' - ' . $default_timings[$p][1]; ?></small>
+                                </th>
+                            <?php endforeach; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($days as $day): ?>
+                            <tr>
+                                <th class="table-light align-middle"><?php echo $day; ?></th>
+                                <?php foreach ($periods as $p): ?>
+                                    <?php 
+                                    $cell = $timetable[$day][$p] ?? null; 
+                                    $cell_class = $cell ? 'bg-light' : '';
+                                    if ($day == date('l') && $cell) {
+                                        $current_time = date('H:i:s');
+                                        if ($cell['start_time'] <= $current_time && $cell['end_time'] >= $current_time) {
+                                            $cell_class = 'bg-primary text-white';
+                                        }
+                                    }
+                                    ?>
+                                    <td class="<?php echo $cell_class; ?>" style="min-width: 130px; height: 90px;">
+                                        <?php if ($cell && !empty($cell['subject_id'])): ?>
+                                            <div class="fw-bold <?php echo ($cell_class == 'bg-primary text-white') ? 'text-white' : 'text-primary'; ?>">
+                                                <?php echo htmlspecialchars($cell['subject_code']); ?>
+                                            </div>
+                                            <div class="small fw-semibold"><?php echo htmlspecialchars($cell['subject_name']); ?></div>
+                                            <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
+                                        <?php else: ?>
+                                            <div class="<?php echo ($cell_class == 'bg-primary text-white') ? 'text-white' : 'text-muted'; ?> small fst-italic">Free Period</div>
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php require_once 'includes/footer.php'; ?>

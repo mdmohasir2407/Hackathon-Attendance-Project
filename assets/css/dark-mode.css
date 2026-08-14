@@ -1,0 +1,61 @@
+/* assets/css/dark-mode.css */
+body.dark-mode {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-sidebar: #1e293b;
+    --bg-navbar: rgba(30, 41, 59, 0.85);
+    
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    
+    --border-color: #334155;
+    
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .sidebar .nav-link {
+    color: var(--text-secondary);
+}
+
+body.dark-mode .sidebar .nav-link:hover, 
+body.dark-mode .sidebar .nav-link.active {
+    background-color: rgba(14, 165, 233, 0.15);
+    color: var(--primary);
+}
+
+body.dark-mode .table-modern th {
+    background-color: #0f172a;
+    color: var(--text-secondary);
+}
+
+body.dark-mode .table-modern tbody tr:hover {
+    background-color: rgba(14, 165, 233, 0.05);
+}
+
+/* Custom overrides for dark mode forms and elements */
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: #0f172a;
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+    background-color: #0f172a;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25);
+    color: var(--text-primary);
+}
+
+body.dark-mode .card,
+body.dark-mode .glass-panel {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
