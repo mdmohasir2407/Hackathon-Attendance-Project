@@ -98,42 +98,46 @@ $recent_feedback = $stmt->fetchAll();
     </div>
 </div>
 
-<div class="row mb-4">
-    <div class="col-md-3">
-        <div class="card text-white bg-success shadow-sm h-100">
+<div class="row mb-4 animate-on-scroll fade-in-up">
+    <div class="col-md-3 delay-100">
+        <div class="card premium-glass-card tilt-card h-100">
+            <div class="glare-effect"></div>
             <div class="card-body">
-                <h5 class="card-title">Attendance</h5>
-                <h2 class="display-5"><?php echo $attendance_percent; ?>%</h2>
-                <span class="badge bg-light text-success"><?php echo $attendance_risk; ?></span>
+                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #10b981;">Attendance</h5>
+                <h2 class="display-5 fw-bold neon-text premium-text"><span class="count-up" data-count="<?php echo $attendance_percent; ?>">0</span>%</h2>
+                <span class="badge bg-transparent border border-success text-success pulse-badge"><?php echo $attendance_risk; ?></span>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-info shadow-sm h-100">
+    <div class="col-md-3 delay-200">
+        <div class="card premium-glass-card tilt-card h-100">
+            <div class="glare-effect"></div>
             <div class="card-body">
-                <h5 class="card-title">Today's Classes</h5>
-                <h2 class="display-5"><?php echo count($todays_classes); ?></h2>
+                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #0ea5e9;">Today's Classes</h5>
+                <h2 class="display-5 count-up fw-bold neon-text premium-text" data-count="<?php echo count($todays_classes); ?>">0</h2>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-warning shadow-sm h-100">
+    <div class="col-md-3 delay-300">
+        <div class="card premium-glass-card tilt-card h-100">
+            <div class="glare-effect"></div>
             <div class="card-body">
-                <h5 class="card-title">Pending Assignments</h5>
-                <h2 class="display-5"><?php echo $pending_assignments; ?></h2>
+                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #f59e0b;">Pending Assignments</h5>
+                <h2 class="display-5 count-up fw-bold neon-text premium-text" data-count="<?php echo $pending_assignments; ?>">0</h2>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-primary shadow-sm h-100">
+    <div class="col-md-3 delay-400">
+        <div class="card premium-glass-card tilt-card h-100">
+            <div class="glare-effect"></div>
             <div class="card-body">
-                <h5 class="card-title">Next Class</h5>
+                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: var(--premium-purple);">Next Class</h5>
                 <?php if ($next_class): ?>
-                    <h4 class="mb-0 text-truncate"><?php echo htmlspecialchars($next_class['subject_code']); ?></h4>
-                    <small><?php echo date('h:i A', strtotime($next_class['start_time'])); ?></small>
+                    <h4 class="mb-0 text-truncate hover-bounce-icon fw-bold premium-text"><?php echo htmlspecialchars($next_class['subject_code']); ?></h4>
+                    <small class="opacity-75 premium-text-muted"><?php echo date('h:i A', strtotime($next_class['start_time'])); ?></small>
                 <?php else: ?>
-                    <h4>None</h4>
-                    <small>For today</small>
+                    <h4 class="hover-bounce-icon fw-bold premium-text">None</h4>
+                    <small class="opacity-75 premium-text-muted">For today</small>
                 <?php endif; ?>
             </div>
         </div>

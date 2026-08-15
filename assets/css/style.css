@@ -1,5 +1,7 @@
 /* assets/css/style.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('animations.css');
+@import url('premium-ui.css');
 
 :root {
     --primary: #0ea5e9;
@@ -35,15 +37,17 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     background-color: var(--bg-main);
     color: var(--text-primary);
     overflow-x: hidden;
+    letter-spacing: -0.01em;
 }
 
 h1, h2, h3, h4, h5, h6, .navbar-brand {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Outfit', sans-serif;
     color: var(--text-primary);
+    letter-spacing: -0.02em;
 }
 
 /* Layout Core */

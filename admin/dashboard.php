@@ -30,91 +30,109 @@ $recent_logs = $stmt->fetchAll();
     <h1 class="h2">Dashboard</h1>
 </div>
 
-<div class="row">
-    <div class="col-md-3 mb-4">
-        <div class="card text-white bg-primary h-100">
+<div class="row animate-on-scroll fade-in-up">
+    <div class="col-md-3 mb-4 delay-100">
+        <div class="card premium-glass-card tilt-card h-100">
+            <div class="glare-effect"></div>
             <div class="card-body">
-                <h5 class="card-title">Total Students</h5>
-                <h2 class="display-4"><?php echo $stats['students']; ?></h2>
+                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #0ea5e9;">Total Students</h5>
+                <h2 class="display-4 count-up fw-bold neon-text" data-count="<?php echo $stats['students']; ?>"><?php echo $stats['students']; ?></h2>
             </div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="students.php">View Details</a>
-                <div class="small text-white"><i class="bi bi-chevron-right"></i></div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
+                <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="students.php">View Details</a>
+                <div class="small premium-text hover-bounce-icon"><i class="bi bi-chevron-right"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-4">
-        <div class="card text-white bg-success h-100">
+    <div class="col-md-3 mb-4 delay-200">
+        <div class="card premium-glass-card tilt-card h-100">
+            <div class="glare-effect"></div>
             <div class="card-body">
-                <h5 class="card-title">Total Teachers</h5>
-                <h2 class="display-4"><?php echo $stats['teachers']; ?></h2>
+                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #10b981;">Total Teachers</h5>
+                <h2 class="display-4 count-up fw-bold neon-text" data-count="<?php echo $stats['teachers']; ?>"><?php echo $stats['teachers']; ?></h2>
             </div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="teachers.php">View Details</a>
-                <div class="small text-white"><i class="bi bi-chevron-right"></i></div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
+                <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="teachers.php">View Details</a>
+                <div class="small premium-text hover-bounce-icon"><i class="bi bi-chevron-right"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-4">
-        <div class="card text-white bg-warning h-100">
+    <div class="col-md-3 mb-4 delay-300">
+        <div class="card premium-glass-card tilt-card h-100">
+            <div class="glare-effect"></div>
             <div class="card-body">
-                <h5 class="card-title">Total Departments</h5>
-                <h2 class="display-4"><?php echo $stats['departments']; ?></h2>
+                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #f59e0b;">Total Departments</h5>
+                <h2 class="display-4 count-up fw-bold neon-text" data-count="<?php echo $stats['departments']; ?>"><?php echo $stats['departments']; ?></h2>
             </div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="departments.php">View Details</a>
-                <div class="small text-white"><i class="bi bi-chevron-right"></i></div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
+                <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="departments.php">View Details</a>
+                <div class="small premium-text hover-bounce-icon"><i class="bi bi-chevron-right"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-4">
-        <div class="card text-white bg-danger h-100">
+    <div class="col-md-3 mb-4 delay-400">
+        <div class="card premium-glass-card tilt-card h-100">
+            <div class="glare-effect"></div>
             <div class="card-body">
-                <h5 class="card-title">Total Classes</h5>
-                <h2 class="display-4"><?php echo $stats['classes']; ?></h2>
+                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #ef4444;">Total Classes</h5>
+                <h2 class="display-4 count-up fw-bold neon-text" data-count="<?php echo $stats['classes']; ?>"><?php echo $stats['classes']; ?></h2>
             </div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="classes.php">View Details</a>
-                <div class="small text-white"><i class="bi bi-chevron-right"></i></div>
+            <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
+                <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="classes.php">View Details</a>
+                <div class="small premium-text hover-bounce-icon"><i class="bi bi-chevron-right"></i></div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row animate-on-scroll fade-in-up delay-500">
     <div class="col-md-12">
-        <div class="card mb-4">
-            <div class="card-header">
-                <i class="bi bi-list-check me-1"></i>
-                Recent Activity
+        <div class="card premium-glass-card tilt-card mb-4">
+            <div class="glare-effect"></div>
+            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-2">
+                <i class="bi bi-list-check me-2 pulse-badge" style="color: var(--premium-accent); font-size: 1.2rem;"></i>
+                <span class="fw-bold premium-text fs-5" style="letter-spacing: 0.5px;">Recent Activity</span>
             </div>
             <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>Timestamp</th>
-                                <th>User</th>
-                                <th>Role</th>
-                                <th>Action</th>
-                                <th>IP Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach($recent_logs as $log): ?>
-                            <tr>
-                                <td><?php echo $log['timestamp']; ?></td>
-                                <td><?php echo htmlspecialchars($log['email'] ?? 'System'); ?></td>
-                                <td><span class="badge bg-secondary"><?php echo htmlspecialchars($log['role'] ?? '-'); ?></span></td>
-                                <td><?php echo htmlspecialchars($log['action']); ?></td>
-                                <td><?php echo htmlspecialchars($log['ip_address']); ?></td>
-                            </tr>
-                            <?php endforeach; ?>
-                            <?php if(empty($recent_logs)): ?>
-                            <tr><td colspan="5" class="text-center">No recent activity.</td></tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                <div class="p-3">
+                    <!-- Header Row -->
+                    <div class="d-flex text-uppercase fw-bold small premium-text-muted mb-2 px-3" style="letter-spacing: 1px;">
+                        <div class="data-cell">Timestamp</div>
+                        <div class="data-cell flex-grow-1">User</div>
+                        <div class="data-cell">Role</div>
+                        <div class="data-cell flex-grow-1">Action</div>
+                        <div class="data-cell">IP Address</div>
+                    </div>
+                    
+                    <!-- Data Rows -->
+                    <div class="data-cards-container">
+                        <?php foreach($recent_logs as $index => $log): ?>
+                        <div class="data-card-row animate-on-scroll fade-in-up" style="animation-delay: <?php echo ($index * 100); ?>ms;">
+                            <div class="data-cell text-muted small"><i class="bi bi-clock me-2"></i><?php echo date('M d, H:i', strtotime($log['timestamp'])); ?></div>
+                            <div class="data-cell flex-grow-1 fw-bold"><?php echo htmlspecialchars($log['email'] ?? 'System'); ?></div>
+                            <div class="data-cell">
+                                <span class="badge bg-transparent border border-secondary text-secondary rounded-pill px-3 py-2">
+                                    <?php echo htmlspecialchars($log['role'] ?? '-'); ?>
+                                </span>
+                            </div>
+                            <div class="data-cell flex-grow-1">
+                                <span class="text-truncate d-inline-block" style="max-width: 250px;">
+                                    <?php echo htmlspecialchars($log['action']); ?>
+                                </span>
+                            </div>
+                            <div class="data-cell font-monospace small opacity-75">
+                                <?php echo htmlspecialchars($log['ip_address']); ?>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                        
+                        <?php if(empty($recent_logs)): ?>
+                        <div class="text-center p-5 premium-text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                            No recent activity found.
+                        </div>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>

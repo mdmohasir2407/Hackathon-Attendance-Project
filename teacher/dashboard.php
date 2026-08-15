@@ -136,20 +136,22 @@ $stats['total_students'] = $stmt->fetchColumn();
 
     <div class="col-md-4">
         <!-- Stats -->
-        <div class="row">
+        <div class="row animate-on-scroll fade-in-up delay-200">
             <div class="col-6 mb-3">
-                <div class="card text-white bg-primary h-100 shadow-sm">
+                <div class="card premium-glass-card tilt-card h-100 shadow-sm">
+                    <div class="glare-effect"></div>
                     <div class="card-body text-center p-3">
-                        <h2 class="mb-0"><?php echo $stats['my_classes']; ?></h2>
-                        <div class="small">My Classes</div>
+                        <h2 class="mb-0 count-up fw-bold neon-text premium-text" data-count="<?php echo $stats['my_classes']; ?>"><?php echo $stats['my_classes']; ?></h2>
+                        <div class="small text-uppercase mt-2" style="letter-spacing: 1px; color: #0ea5e9;">My Classes</div>
                     </div>
                 </div>
             </div>
             <div class="col-6 mb-3">
-                <div class="card text-white bg-success h-100 shadow-sm">
+                <div class="card premium-glass-card tilt-card h-100 shadow-sm">
+                    <div class="glare-effect"></div>
                     <div class="card-body text-center p-3">
-                        <h2 class="mb-0"><?php echo $stats['total_students']; ?></h2>
-                        <div class="small">Total Students</div>
+                        <h2 class="mb-0 count-up fw-bold neon-text premium-text" data-count="<?php echo $stats['total_students']; ?>"><?php echo $stats['total_students']; ?></h2>
+                        <div class="small text-uppercase mt-2" style="letter-spacing: 1px; color: #10b981;">Total Students</div>
                     </div>
                 </div>
             </div>

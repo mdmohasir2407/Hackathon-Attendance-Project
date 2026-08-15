@@ -15,6 +15,9 @@ session_start();
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
+    <!-- Custom Animations -->
+    <link rel="stylesheet" href="assets/css/animations.css">
+    
     <style>
         :root {
             --primary-blue: #0d6efd;
@@ -110,7 +113,7 @@ session_start();
         /* HERO SECTION */
         .hero-section {
             padding: 120px 0 80px 0;
-            background: radial-gradient(circle at top right, #e0f2fe 0%, #f8fafc 100%);
+            background: transparent;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -138,10 +141,12 @@ session_start();
         }
 
         .hero-title {
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
         }
 
         .hero-desc {
@@ -180,6 +185,7 @@ session_start();
             transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
             transition: transform 0.5s ease;
             animation: float-mockup 6s infinite alternate ease-in-out;
+            cursor: pointer;
         }
 
         @keyframes float-mockup {
@@ -398,39 +404,189 @@ session_start();
 <body>
     <!-- HERO SECTION / PORTAL -->
     <section class="hero-section" id="home" style="padding: 0; display: flex; align-items: center; justify-content: center;">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="container hero-content text-center">
+        <div class="mesh-bg"></div>
+        <div class="orb orb-1" style="background: rgba(0, 240, 255, 0.4);"></div>
+        <div class="orb orb-2" style="background: rgba(138, 43, 226, 0.4);"></div>
+        
+        <div class="container hero-content text-center floating-3d">
             
-            <div class="fade-in-up visible" style="max-width: 600px; margin: 0 auto; background: var(--glass-bg); padding: 4rem 2rem; border-radius: 20px; border: 1px solid var(--glass-border); backdrop-filter: blur(15px); box-shadow: 0 20px 40px rgba(0,0,0,0.05);">
-                
-                <div class="mb-4">
-                    <i class="bi bi-hexagon-fill" style="font-size: 4rem; color: var(--primary-blue);"></i>
+            <div class="fade-in-up visible premium-glass-card tilt-card" style="max-width: 700px; margin: 0 auto; padding: 5rem 3rem;">
+                <div class="glare-effect"></div>
+                <div class="mb-4 hover-bounce-icon">
+                    <i class="bi bi-hexagon-fill" style="font-size: 4rem; color: var(--premium-accent); filter: drop-shadow(0 0 20px var(--premium-accent));"></i>
                 </div>
                 
-                <h1 class="hero-title mb-3" style="font-size: 3rem;">Campus Nova</h1>
-                <p class="hero-desc mb-5" style="font-size: 1.1rem;">Smart Education Platform</p>
+                <h1 class="hero-title mb-3 neon-text premium-text">Campus Nova</h1>
+                <p class="hero-desc mb-5 premium-text-muted" style="font-size: 1.2rem;">Next-Generation Smart Education Platform</p>
                 
                 <div class="d-flex flex-column gap-3 align-items-center">
-                    <a href="auth/login.php" class="btn btn-gradient btn-lg w-100" style="max-width: 300px; padding: 1rem;">
-                        <i class="bi bi-box-arrow-in-right me-2"></i> Login to Portal
+                    <a href="auth/login.php" class="btn btn-gradient btn-lg w-100 magnetic-btn btn-ripple-container" style="max-width: 320px; padding: 1.2rem; font-size: 1.1rem;">
+                        <i class="bi bi-box-arrow-in-right me-2"></i> Enter Portal
                     </a>
-                    <a href="auth/register.php" class="btn btn-light btn-lg w-100 shadow-sm" style="max-width: 300px; color: var(--text-dark); border: 1px solid #e2e8f0; padding: 1rem;">
-                        <i class="bi bi-person-plus me-2"></i> Create an Account
+                    <a href="auth/register.php" class="btn btn-lg w-100 magnetic-btn btn-ripple-container mt-4" style="max-width: 320px; padding: 1.2rem; font-size: 1.1rem; border: none; background: rgba(255,255,255,0.7); color: black !important; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 50px;">
+                        <i class="bi bi-person-plus me-2"></i> Join as Student
                     </a>
                 </div>
                 
             </div>
             
-            <div class="mt-5 fade-in-up visible" style="transition-delay: 0.2s;">
-                <p class="text-muted small">&copy; <?php echo date('Y'); ?> Campus Nova. All Rights Reserved.</p>
+            <div class="mt-4 fade-in-up visible" style="transition-delay: 0.2s;">
+                <p class="premium-text-muted small">&copy; <?php echo date('Y'); ?> Campus Nova. Designed for the Future.</p>
             </div>
             
         </div>
     </section>
 
+    <!-- STATISTICS SECTION -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 stat-item fade-in-up">
+                    <div class="stat-number">10k+</div>
+                    <div class="text-muted fw-bold">Active Students</div>
+                </div>
+                <div class="col-md-3 col-sm-6 stat-item fade-in-up" style="transition-delay: 0.1s;">
+                    <div class="stat-number">500+</div>
+                    <div class="text-muted fw-bold">Expert Teachers</div>
+                </div>
+                <div class="col-md-3 col-sm-6 stat-item fade-in-up" style="transition-delay: 0.2s;">
+                    <div class="stat-number">99%</div>
+                    <div class="text-muted fw-bold">Attendance Rate</div>
+                </div>
+                <div class="col-md-3 col-sm-6 stat-item fade-in-up" style="transition-delay: 0.3s;">
+                    <div class="stat-number">24/7</div>
+                    <div class="text-muted fw-bold">Smart Access</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+        <div class="container">
+            <div class="text-center mb-5 fade-in-up">
+                <h2 class="fw-bold" style="font-size: 2.5rem;">Why Choose Campus Nova?</h2>
+                <p class="text-muted" style="max-width: 600px; margin: 0 auto;">Experience a seamless transition into the future of education with our cutting-edge tools designed for modern institutions.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 fade-in-up">
+                    <div class="card border-0 shadow-sm h-100 p-4" style="border-radius: 20px;">
+                        <div class="feature-icon-wrapper">
+                            <i class="bi bi-qr-code-scan"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Smart QR Attendance</h4>
+                        <p class="text-muted">Say goodbye to roll calls. Mark your attendance in seconds using secure, dynamic QR codes generated by your teachers.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 fade-in-up" style="transition-delay: 0.1s;">
+                    <div class="card border-0 shadow-sm h-100 p-4" style="border-radius: 20px;">
+                        <div class="feature-icon-wrapper">
+                            <i class="bi bi-journal-check"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">AI-Driven Analytics</h4>
+                        <p class="text-muted">Track your performance and attendance with beautiful charts. Identify your weak areas before the exams.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 fade-in-up" style="transition-delay: 0.2s;">
+                    <div class="card border-0 shadow-sm h-100 p-4" style="border-radius: 20px;">
+                        <div class="feature-icon-wrapper">
+                            <i class="bi bi-file-earmark-check"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Paperless Operations</h4>
+                        <p class="text-muted">Apply for leaves, request gate passes, and submit assignments entirely online. Fast approvals and zero paper waste.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section class="workflow-section">
+        <div class="container">
+            <div class="text-center mb-5 fade-in-up">
+                <h2 class="fw-bold" style="font-size: 2.5rem;">How It Works</h2>
+                <p class="text-muted">A simple, intuitive workflow for students and teachers.</p>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-4 workflow-step fade-in-up">
+                    <div class="step-icon"><i class="bi bi-1-circle"></i></div>
+                    <div class="step-arrow"></div>
+                    <h5 class="fw-bold">Login & Connect</h5>
+                    <p class="text-muted small">Enter your portal securely to view your daily schedule and upcoming classes.</p>
+                </div>
+                <div class="col-md-4 workflow-step fade-in-up" style="transition-delay: 0.1s;">
+                    <div class="step-icon"><i class="bi bi-2-circle"></i></div>
+                    <div class="step-arrow"></div>
+                    <h5 class="fw-bold">Scan & Attend</h5>
+                    <p class="text-muted small">Use your mobile to scan the live QR code displayed by your teacher in the classroom.</p>
+                </div>
+                <div class="col-md-4 workflow-step fade-in-up" style="transition-delay: 0.2s;">
+                    <div class="step-icon"><i class="bi bi-3-circle"></i></div>
+                    <h5 class="fw-bold">Learn & Grow</h5>
+                    <p class="text-muted small">Access study materials, take online tests, and view your detailed performance analytics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section text-center">
+        <div class="container cta-content fade-in-up">
+            <h2 class="fw-bold mb-4" style="font-size: 3rem;">Ready to Transform Your Campus?</h2>
+            <p class="lead mb-5" style="max-width: 600px; margin: 0 auto; opacity: 0.9;">Join thousands of students and educators already experiencing the power of Campus Nova.</p>
+            <a href="auth/login.php" class="btn btn-light btn-lg px-5 py-3 fw-bold rounded-pill shadow" style="color: var(--primary-blue);">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row fade-in-up">
+                <div class="col-lg-4 mb-4">
+                    <span class="footer-logo">Campus Nova</span>
+                    <p class="small opacity-75">Next-generation education management system designed to make learning and administration seamless, paperless, and smart.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-2 col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Portals</h5>
+                    <ul>
+                        <li><a href="auth/login.php">Student Portal</a></li>
+                        <li><a href="auth/login.php">Teacher Portal</a></li>
+                        <li><a href="auth/login.php">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Legal</h5>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom fade-in-up" style="transition-delay: 0.2s;">
+                <p>&copy; <?php echo date('Y'); ?> Campus Nova. All rights reserved. Crafted with <i class="bi bi-heart-fill text-danger"></i> for Education.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/animations.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const animatedElements = document.querySelectorAll('.fade-in-up');

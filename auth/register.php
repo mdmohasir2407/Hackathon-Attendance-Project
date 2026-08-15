@@ -65,9 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Campus Nova</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/animations.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
     <link rel="stylesheet" id="theme-stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/premium-ui.css">
     <style>
         body, html {
             height: 100%;
@@ -81,51 +85,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: radial-gradient(circle at top right, #e0f2fe 0%, #f8fafc 100%);
-        }
-
-        .dark-mode .login-wrapper {
-            background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+            position: relative;
         }
 
         .login-card {
             width: 100%;
             max-width: 500px;
             padding: 3rem 2.5rem;
-            border-radius: 20px;
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--glass-border);
+            z-index: 1;
         }
 
-        .form-control {
-            background-color: rgba(255, 255, 255, 0.5);
-            border: 1px solid var(--border-color);
-            padding: 0.85rem 1rem;
-            border-radius: 10px;
-            color: var(--text-primary);
+        .form-floating .form-control {
+            background-color: var(--premium-glass);
+            border: 1px solid var(--premium-border);
+            border-radius: 12px;
+            color: var(--premium-text);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
-        .dark-mode .form-control {
-            background-color: rgba(0, 0, 0, 0.2);
-            color: white;
+        .form-floating label {
+            color: var(--premium-text-muted);
+            transition: all 0.3s ease;
         }
 
-        .form-control:focus {
-            box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25);
-            border-color: var(--primary);
+        .form-floating .form-control:focus {
+            box-shadow: 0 0 15px var(--premium-glow), inset 0 0 10px var(--premium-glow);
+            border-color: var(--premium-accent);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode .form-floating .form-control:focus {
+            background-color: rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
     <div class="login-wrapper">
-        <div class="login-card fade-in-up">
-            <div class="text-center mb-4">
-                <h2 style="font-family: 'Poppins', sans-serif; font-weight: 800; color: var(--primary);">
-                    <i class="bi bi-hexagon-fill me-2"></i>Campus Nova
-                </h2>
-                <p class="text-secondary">Student Registration</p>
+        <a href="../index.php" class="btn magnetic-btn floating-3d hover-bounce-icon position-absolute" style="top: 30px; left: 30px; z-index: 10; border-radius: 50px; padding: 0.6rem 1.2rem; background: var(--premium-glass); border: 1px solid var(--premium-border); color: var(--premium-text); box-shadow: 0 5px 15px rgba(0,0,0,0.1); backdrop-filter: blur(10px); transition: all 0.3s ease;">
+            <i class="bi bi-arrow-left me-2" style="display: inline-block;"></i> Back to Home
+        </a>
+        <div class="mesh-bg"></div>
+        <div class="login-card premium-glass-card tilt-card animate-on-scroll fade-in-up">
+            <div class="glare-effect"></div>
+            
+            <div class="text-center mb-4 hover-bounce-icon">
+                <i class="bi bi-hexagon-fill" style="font-size: 3rem; color: var(--premium-accent); filter: drop-shadow(0 0 15px var(--premium-accent));"></i>
+                <h2 class="mt-3 fw-bold neon-text premium-text">Join Campus Nova</h2>
+                <p class="premium-text-muted">Student Registration</p>
             </div>
             
             <?php if(!empty($error)): ?>
@@ -143,28 +150,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label text-secondary fw-bold small">First Name</label>
-                        <input type="text" name="first_name" class="form-control" required>
+                        <div class="form-floating hover-bounce-icon">
+                            <input type="text" name="first_name" class="form-control" id="firstName" placeholder="First Name" required>
+                            <label for="firstName"><i class="bi bi-person me-1"></i> First Name</label>
+                        </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label text-secondary fw-bold small">Last Name</label>
-                        <input type="text" name="last_name" class="form-control" required>
+                        <div class="form-floating hover-bounce-icon">
+                            <input type="text" name="last_name" class="form-control" id="lastName" placeholder="Last Name" required>
+                            <label for="lastName"><i class="bi bi-person me-1"></i> Last Name</label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label text-secondary fw-bold small">Roll Number</label>
-                    <input type="text" name="roll_number" class="form-control" required>
+                <div class="form-floating mb-3 hover-bounce-icon">
+                    <input type="text" name="roll_number" class="form-control" id="rollNumber" placeholder="Roll Number" required>
+                    <label for="rollNumber"><i class="bi bi-card-text me-1"></i> Roll Number</label>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label text-secondary fw-bold small">Email Address</label>
-                    <input type="email" name="email" class="form-control" required>
+                <div class="form-floating mb-3 hover-bounce-icon">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
+                    <label for="email"><i class="bi bi-envelope me-1"></i> Email Address</label>
                 </div>
                 
-                <div class="mb-4">
-                    <label class="form-label text-secondary fw-bold small">Password</label>
-                    <input type="password" name="password" class="form-control" required>
+                <div class="form-floating mb-4 hover-bounce-icon">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                    <label for="password"><i class="bi bi-key me-1"></i> Password</label>
                 </div>
                 
                 <button type="submit" class="btn btn-gradient w-100 py-2 fs-5">Register</button>

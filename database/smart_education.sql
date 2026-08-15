@@ -237,9 +237,9 @@ CREATE TABLE student_achievements (
 
 -- Default passwords are 'password123'
 INSERT INTO users (email, password_hash, role) VALUES 
-('admin@smartedu.com', '$2y$10$C82H.V/1mS8F.vQf0sQy2OjO/mXNqT7P8KXY.zZg.s3F6pG9aG6/m', 'admin'),
-('teacher@smartedu.com', '$2y$10$C82H.V/1mS8F.vQf0sQy2OjO/mXNqT7P8KXY.zZg.s3F6pG9aG6/m', 'teacher'),
-('student@smartedu.com', '$2y$10$C82H.V/1mS8F.vQf0sQy2OjO/mXNqT7P8KXY.zZg.s3F6pG9aG6/m', 'student');
+('admin@smartedu.com', '$2y$10$zBjYkAfmDQdNSVsaGr./AuAa.CSUwuEh8G1oQnxySISxJfJeT6RBW', 'admin'),
+('teacher@smartedu.com', '$2y$10$zBjYkAfmDQdNSVsaGr./AuAa.CSUwuEh8G1oQnxySISxJfJeT6RBW', 'teacher'),
+('student@smartedu.com', '$2y$10$zBjYkAfmDQdNSVsaGr./AuAa.CSUwuEh8G1oQnxySISxJfJeT6RBW', 'student');
 
 INSERT INTO admins (id, first_name, last_name, phone) VALUES 
 (1, 'System', 'Admin', '1234567890');
