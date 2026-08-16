@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Skip cards on the home page (hero section) or cards explicitly marked no-expand
         if(card.closest('.hero-content') || card.classList.contains('no-expand')) return;
         
-        card.style.cursor = 'zoom-in';
+        // card.style.cursor = 'zoom-in'; // Removed zoom cursor
         card.addEventListener('click', function(e) {
             // Prevent if clicking a button or link inside
             if(e.target.closest('a') || e.target.closest('button') || e.target.closest('input')) return;
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
             clone.style.maxWidth = '1000px';
             clone.style.maxHeight = '90vh';
             clone.style.overflowY = 'auto';
-            clone.style.cursor = 'default';
+            // clone.style.cursor = 'default'; // Removed cursor
             clone.style.transform = 'scale(0.8) translateY(50px)';
             clone.style.transition = 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)';
             clone.style.boxShadow = '0 30px 100px rgba(0,0,0,0.8)';

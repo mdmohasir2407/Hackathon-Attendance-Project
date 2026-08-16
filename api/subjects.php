@@ -46,6 +46,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    if ($action == 'edit') {
+        $id = $_POST['id'];
+        $code = trim($_POST['code']);
+        $name = trim($_POST['name']);
+        $department_id = $_POST['department_id'];
+        $semester_id = $_POST['semester_id'];
+        $credits = $_POST['credits'];
+
+        if (!empty($id) && !empty($code) && !empty($name) && !empty($department_id) && !empty($semester_id)) {
+            try {
+                $stmt = $pdo->prepare("UPDATE subjects SET code = ?, name = ?, department_id = ?, semester_id = ?, credits = ? WHERE id = ?");
+                $stmt->execute([$code, $name, $department_id, $semester_id, $credits, $id]);
+                echo json_encode(['success' => true, 'message' => 'Subject updated successfully.']);
+                exit;
+            } catch (PDOException $e) {
+                echo json_encode(['success' => false, 'message' => 'Error updating subject. Code might already exist.']);
+                exit;
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'All fields are required.']);
+            exit;
+        }
+    }
+
     if ($action == 'toggle_status') {
         $id = $_POST['id'];
         $status_action = $_POST['status_action'];

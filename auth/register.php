@@ -125,14 +125,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="../index.php" class="btn magnetic-btn floating-3d hover-bounce-icon position-absolute" style="top: 30px; left: 30px; z-index: 10; border-radius: 50px; padding: 0.6rem 1.2rem; background: var(--premium-glass); border: 1px solid var(--premium-border); color: var(--premium-text); box-shadow: 0 5px 15px rgba(0,0,0,0.1); backdrop-filter: blur(10px); transition: all 0.3s ease;">
             <i class="bi bi-arrow-left me-2" style="display: inline-block;"></i> Back to Home
         </a>
-        <div class="mesh-bg"></div>
+        <div class="animated-bg">
+            <div class="cell c1"><i class="bi bi-laptop"></i></div>
+            <div class="cell c2"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="cell c3"><i class="bi bi-check2-circle"></i></div>
+            <div class="cell c4"><i class="bi bi-calendar2-week"></i></div>
+            <div class="cell c5"><i class="bi bi-book"></i></div>
+        </div>
         <div class="login-card premium-glass-card tilt-card animate-on-scroll fade-in-up">
             <div class="glare-effect"></div>
             
-            <div class="text-center mb-4 hover-bounce-icon">
-                <i class="bi bi-hexagon-fill" style="font-size: 3rem; color: var(--premium-accent); filter: drop-shadow(0 0 15px var(--premium-accent));"></i>
-                <h2 class="mt-3 fw-bold neon-text premium-text">Join Campus Nova</h2>
-                <p class="premium-text-muted">Student Registration</p>
+            <div class="text-center mb-4">
+                <i class="bi bi-hexagon-fill" style="font-size: 2.5rem; color: #0ea5e9;"></i>
+                <h3 class="mt-2 fw-bold" style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Join Campus Nova</h3>
+                <p class="text-secondary fw-bold">Create your student account</p>
             </div>
             
             <?php if(!empty($error)): ?>

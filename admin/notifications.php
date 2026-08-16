@@ -1,21 +1,21 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../auth/login.php");
     exit;
 }
 require_once '../config/database.php';
 
-$student_id = $_SESSION['user_id'];
+$admin_id = $_SESSION['user_id'];
 
 // Handle Mark as Read Actions
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'read_all') {
         $stmt = $pdo->prepare("UPDATE notifications SET is_read = TRUE WHERE user_id = ?");
-        $stmt->execute([$student_id]);
+        $stmt->execute([$admin_id]);
     } elseif ($_GET['action'] == 'read' && isset($_GET['id'])) {
         $stmt = $pdo->prepare("UPDATE notifications SET is_read = TRUE WHERE id = ? AND user_id = ?");
-        $stmt->execute([$_GET['id'], $student_id]);
+        $stmt->execute([$_GET['id'], $admin_id]);
     }
     // Redirect to clear URL parameters
     header("Location: notifications.php");
@@ -26,7 +26,7 @@ require_once 'includes/header.php';
 
 // Fetch notifications
 $stmt = $pdo->prepare("SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT 50");
-$stmt->execute([$student_id]);
+$stmt->execute([$admin_id]);
 $notifications = $stmt->fetchAll();
 ?>
 
@@ -43,7 +43,7 @@ $notifications = $stmt->fetchAll();
     <div class="col-md-8">
         <div class="list-group shadow-sm mb-4">
             <?php foreach($notifications as $n): ?>
-                <div class="list-group-item list-group-item-action d-flex gap-3 py-3 <?php echo $n['is_read'] ? 'bg-light text-muted' : ''; ?>">
+                <div class="list-group-item list-group-item-action d-flex gap-3 py-3 <?php echo $n['is_read'] ? 'bg-light text-muted' : 'bg-transparent'; ?> dark-mode-fix">
                     <?php 
                         $icon = 'bell-fill text-primary';
                         if($n['type'] == 'Feedback') $icon = 'chat-dots-fill text-warning';
@@ -70,7 +70,7 @@ $notifications = $stmt->fetchAll();
             <?php endforeach; ?>
             
             <?php if(empty($notifications)): ?>
-                <div class="list-group-item text-center py-5 text-muted">
+                <div class="list-group-item bg-transparent text-center py-5 text-muted">
                     <i class="bi bi-bell-slash fs-1 d-block mb-3"></i>
                     <h5>No Notifications</h5>
                     <p>You're all caught up!</p>
@@ -79,5 +79,15 @@ $notifications = $stmt->fetchAll();
         </div>
     </div>
 </div>
+
+<style>
+/* Dark mode fix for notifications */
+body.dark-mode .dark-mode-fix {
+    background-color: transparent !important;
+}
+body.dark-mode .bg-light {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+</style>
 
 <?php require_once 'includes/footer.php'; ?>

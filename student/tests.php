@@ -17,8 +17,8 @@ require_once 'includes/header.php';
     
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-            <h2 class="fw-bold mb-0">Weekly Test Question Papers</h2>
-            <p class="text-muted small mb-0">View scheduled weekly test period question papers (Period 1, Period 2, Period 3) for offline exams</p>
+            <h2 class="fw-bold mb-0">Weekly Questions</h2>
+            <p class="text-muted small mb-0">View scheduled weekly question papers for offline exams</p>
         </div>
     </div>
 
@@ -177,7 +177,7 @@ require_once 'includes/header.php';
                 <i class="bi bi-hexagon-fill text-primary fs-3"></i>
                 <h3 class="fw-bold mb-0 text-uppercase tracking-wide">SMART EDUCATION PORTAL</h3>
             </div>
-            <h5 class="fw-bold text-secondary mb-1">OFFLINE WEEKLY TEST QUESTION PAPER</h5>
+            <h5 class="fw-bold text-secondary mb-1">OFFLINE WEEKLY QUESTION PAPER</h5>
             <div class="badge bg-primary fs-6 rounded-pill px-3 py-2 mt-1"><?php echo htmlspecialchars($test['test_period']); ?></div>
         </div>
 

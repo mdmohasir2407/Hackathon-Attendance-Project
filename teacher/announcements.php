@@ -80,13 +80,13 @@ $announcements = $stmt->fetchAll();
 <?php endif; ?>
 
 <div class="card shadow-sm">
-    <div class="card-header bg-white">
+    <div class="card-header">
         <i class="bi bi-clock-history me-1"></i> My Announcements
     </div>
     <div class="card-body p-0">
         <div class="list-group list-group-flush">
             <?php foreach($announcements as $a): ?>
-                <div class="list-group-item p-4">
+                <div class="list-group-item p-4 bg-transparent text-light">
                     <div class="d-flex w-100 justify-content-between align-items-start mb-2">
                         <div>
                             <span class="badge bg-secondary me-2"><?php echo htmlspecialchars($a['category']); ?></span>

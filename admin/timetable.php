@@ -70,6 +70,13 @@ $default_timings = [
                     <?php endforeach; ?>
                 </select>
             </div>
+            <?php if (!empty($class_id)): ?>
+            <div class="col-auto ms-auto">
+                <button type="button" class="btn btn-success" id="autoGenerateBtn" data-class="<?php echo $class_id; ?>">
+                    <i class="bi bi-magic"></i> Auto Generate Timetable
+                </button>
+            </div>
+            <?php endif; ?>
         </form>
     </div>
 </div>
@@ -83,12 +90,16 @@ $default_timings = [
                     <thead class="table-light">
                         <tr>
                             <th>Day / Period</th>
-                            <?php foreach ($periods as $p): ?>
-                                <th>
-                                    Period <?php echo $p; ?><br>
-                                    <small class="text-muted"><?php echo $default_timings[$p][0] . ' - ' . $default_timings[$p][1]; ?></small>
-                                </th>
-                            <?php endforeach; ?>
+                            <th>Period 1<br><small class="text-muted">09:00 - 09:50</small></th>
+                            <th>Period 2<br><small class="text-muted">09:50 - 10:40</small></th>
+                            <th class="table-warning text-dark align-middle" style="width: 50px;">Break 1</th>
+                            <th>Period 3<br><small class="text-muted">10:50 - 11:40</small></th>
+                            <th>Period 4<br><small class="text-muted">11:40 - 12:30</small></th>
+                            <th class="table-warning text-dark align-middle" style="width: 50px;">Lunch</th>
+                            <th>Period 5<br><small class="text-muted">13:30 - 14:20</small></th>
+                            <th>Period 6<br><small class="text-muted">14:20 - 15:10</small></th>
+                            <th class="table-warning text-dark align-middle" style="width: 50px;">Break 2</th>
+                            <th>Period 7<br><small class="text-muted">15:20 - 16:10</small></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,10 +108,31 @@ $default_timings = [
                                 <th class="table-light align-middle"><?php echo $day; ?></th>
                                 <?php foreach ($periods as $p): ?>
                                     <?php 
+                                    if ($p == 3) echo '<td class="table-warning text-dark align-middle border-start border-end" rowspan="1"><div style="writing-mode: vertical-rl; text-orientation: mixed; margin:auto;">BREAK</div></td>';
+                                    if ($p == 5) echo '<td class="table-warning text-dark align-middle border-start border-end" rowspan="1"><div style="writing-mode: vertical-rl; text-orientation: mixed; margin:auto;">LUNCH</div></td>';
+                                    if ($p == 7) echo '<td class="table-warning text-dark align-middle border-start border-end" rowspan="1"><div style="writing-mode: vertical-rl; text-orientation: mixed; margin:auto;">BREAK</div></td>';
+                                    
                                     $cell = $timetable[$day][$p] ?? null; 
                                     $cell_class = $cell ? 'bg-light' : '';
                                     ?>
-                                    <td class="<?php echo $cell_class; ?> position-relative" style="min-width: 150px; height: 100px;">
+                                    <td class="<?php echo $cell_class; ?> position-relative timetable-cell" 
+                                        style="min-width: 150px; height: 100px; cursor: pointer; transition: all 0.2s;"
+                                        data-bs-toggle="modal" data-bs-target="#editPeriodModal"
+                                        data-day="<?php echo $day; ?>" data-period="<?php echo $p; ?>" 
+                                        <?php if ($cell): ?>
+                                            data-id="<?php echo $cell['id']; ?>"
+                                            data-subject="<?php echo $cell['subject_id']; ?>"
+                                            data-teacher="<?php echo $cell['teacher_id']; ?>"
+                                            data-classroom="<?php echo htmlspecialchars($cell['classroom']); ?>"
+                                            data-start="<?php echo date('H:i', strtotime($cell['start_time'])); ?>"
+                                            data-end="<?php echo date('H:i', strtotime($cell['end_time'])); ?>"
+                                            data-is-edit="true"
+                                        <?php else: ?>
+                                            data-start="<?php echo $default_timings[$p][0]; ?>"
+                                            data-end="<?php echo $default_timings[$p][1]; ?>"
+                                            data-is-edit="false"
+                                        <?php endif; ?>
+                                        >
                                         <?php if ($cell && !empty($cell['subject_id'])): ?>
                                             <div class="fw-bold text-primary"><?php echo htmlspecialchars($cell['subject_code']); ?></div>
                                             <div class="small"><?php echo htmlspecialchars($cell['subject_name']); ?></div>
@@ -108,27 +140,20 @@ $default_timings = [
                                                 <?php echo $cell['teacher_id'] ? htmlspecialchars($cell['first_name'] . ' ' . $cell['last_name']) : 'No Teacher Assigned'; ?>
                                             </div>
                                             <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
-                                            <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-1 edit-period-btn" 
-                                                    data-bs-toggle="modal" data-bs-target="#editPeriodModal"
-                                                    data-day="<?php echo $day; ?>" data-period="<?php echo $p; ?>" 
-                                                    data-id="<?php echo $cell['id']; ?>"
-                                                    data-subject="<?php echo $cell['subject_id']; ?>"
-                                                    data-teacher="<?php echo $cell['teacher_id']; ?>"
-                                                    data-classroom="<?php echo htmlspecialchars($cell['classroom']); ?>"
-                                                    data-start="<?php echo date('H:i', strtotime($cell['start_time'])); ?>"
-                                                    data-end="<?php echo date('H:i', strtotime($cell['end_time'])); ?>"
-                                                    title="Edit Period">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
+                                            <div class="position-absolute top-0 end-0 m-1 text-muted" style="opacity: 0.5;">
+                                                <i class="bi bi-pencil small"></i>
+                                            </div>
+                                        <?php elseif ($cell && empty($cell['subject_id'])): ?>
+                                            <div class="text-danger fw-bold small fst-italic mb-2">TEST PERIOD</div>
+                                            <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
+                                            <div class="position-absolute top-0 end-0 m-1 text-muted" style="opacity: 0.5;">
+                                                <i class="bi bi-pencil small"></i>
+                                            </div>
                                         <?php else: ?>
                                             <div class="text-muted small fst-italic mb-2">FREE PERIOD</div>
-                                            <button class="btn btn-sm btn-outline-primary add-period-btn" 
-                                                    data-bs-toggle="modal" data-bs-target="#editPeriodModal"
-                                                    data-day="<?php echo $day; ?>" data-period="<?php echo $p; ?>"
-                                                    data-start="<?php echo $default_timings[$p][0]; ?>"
-                                                    data-end="<?php echo $default_timings[$p][1]; ?>">
+                                            <div class="text-primary small fw-bold mt-2 opacity-75">
                                                 <i class="bi bi-plus"></i> Assign
-                                            </button>
+                                            </div>
                                         <?php endif; ?>
                                     </td>
                                 <?php endforeach; ?>
@@ -203,16 +228,17 @@ $default_timings = [
 
     <script>
     $(document).ready(function() {
-        $('.edit-period-btn, .add-period-btn').on('click', function() {
+        $('.timetable-cell').on('click', function() {
             var btn = $(this);
             var day = btn.data('day');
             var period = btn.data('period');
+            var isEdit = btn.data('is-edit');
             
             $('#modal_day').val(day);
             $('#modal_period').val(period);
             $('#modalSubtitle').text(day + ' - Period ' + period);
             
-            if (btn.hasClass('edit-period-btn')) {
+            if (isEdit) {
                 $('#modalTitle').text('Edit Period');
                 $('#subject_id').val(btn.data('subject'));
                 $('#teacher_id').val(btn.data('teacher'));
@@ -246,8 +272,50 @@ $default_timings = [
                         $('#alert-container').html(alertHtml);
                         $('#editPeriodModal').modal('hide');
                     }
+                },
+                error: function(xhr, status, error) {
+                    var alertHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                                    'An unexpected error occurred. Please try again. ' + error +
+                                    '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                                    '</div>';
+                    $('#alert-container').html(alertHtml);
+                    $('#editPeriodModal').modal('hide');
                 }
             });
+        });
+
+        $('#autoGenerateBtn').on('click', function() {
+            if(confirm("Are you sure? This will OVERWRITE the current timetable for this class and automatically generate a new one with 3 tests, 3 free periods, and evenly distributed subjects.")) {
+                var classId = $(this).data('class');
+                $(this).prop('disabled', true).html('<i class="bi bi-hourglass-split"></i> Generating...');
+                
+                $.ajax({
+                    url: '../api/timetable.php',
+                    type: 'POST',
+                    data: { action: 'generate', class_id: classId },
+                    dataType: 'json',
+                    success: function(response) {
+                        if(response.success) {
+                            location.reload();
+                        } else {
+                            var alertHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                                            response.message +
+                                            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                                            '</div>';
+                            $('#alert-container').html(alertHtml);
+                            $('#autoGenerateBtn').prop('disabled', false).html('<i class="bi bi-magic"></i> Auto Generate Timetable');
+                        }
+                    },
+                    error: function() {
+                        var alertHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                                        'An error occurred during generation.' +
+                                        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+                                        '</div>';
+                        $('#alert-container').html(alertHtml);
+                        $('#autoGenerateBtn').prop('disabled', false).html('<i class="bi bi-magic"></i> Auto Generate Timetable');
+                    }
+                });
+            }
         });
     });
     </script>

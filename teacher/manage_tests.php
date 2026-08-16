@@ -97,11 +97,11 @@ require_once 'includes/header.php';
     
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-            <h2 class="fw-bold mb-0">Manage Weekly Tests</h2>
-            <p class="text-muted small mb-0">Set up 3 weekly test periods and prepare test questions in advance</p>
+            <h2 class="fw-bold mb-0">Weekly Questions</h2>
+            <p class="text-muted small mb-0">Set up weekly question sets for students</p>
         </div>
         <button class="btn btn-gradient" data-bs-toggle="modal" data-bs-target="#createTestModal">
-            <i class="bi bi-plus-lg me-2"></i> Schedule Weekly Test
+            <i class="bi bi-plus-lg me-2"></i> Create Question Set
         </button>
     </div>
 
@@ -220,7 +220,7 @@ require_once 'includes/header.php';
                         <tr>
                             <td colspan="8" class="text-center py-5 text-muted">
                                 <i class="bi bi-journal-x display-4 d-block mb-2 text-secondary"></i>
-                                No weekly test periods created yet for this filter.
+                                No weekly questions created yet for this filter.
                             </td>
                         </tr>
                     <?php endif; ?>
@@ -235,8 +235,8 @@ require_once 'includes/header.php';
             <div class="modal-content glass-panel">
                 <div class="modal-header border-bottom-0">
                     <div>
-                        <h5 class="modal-title fw-bold">Schedule Weekly Test Period</h5>
-                        <p class="text-muted small mb-0">Set up test window & parameters beforehand for students</p>
+                        <h5 class="modal-title fw-bold">Create Weekly Question Set</h5>
+                        <p class="text-muted small mb-0">Set up questions beforehand for students</p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -244,16 +244,16 @@ require_once 'includes/header.php';
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-md-8">
-                                <label class="form-label text-muted fw-medium">Test Title</label>
-                                <input type="text" class="form-control" name="title" placeholder="e.g. Weekly Test 1 - Chapter 3" required>
+                                <label class="form-label text-muted fw-medium">Title</label>
+                                <input type="text" class="form-control" name="title" placeholder="e.g. Weekly Questions - Chapter 3" required>
                             </div>
                             
                             <div class="col-md-4">
-                                <label class="form-label text-muted fw-medium">Weekly Test Period</label>
+                                <label class="form-label text-muted fw-medium">Weekly Period</label>
                                 <select class="form-select" name="test_period" required>
-                                    <option value="Period 1">Period 1 (Weekly Test 1)</option>
-                                    <option value="Period 2">Period 2 (Weekly Test 2)</option>
-                                    <option value="Period 3">Period 3 (Weekly Test 3)</option>
+                                    <option value="Period 1">Period 1 (Week 1)</option>
+                                    <option value="Period 2">Period 2 (Week 2)</option>
+                                    <option value="Period 3">Period 3 (Week 3)</option>
                                 </select>
                             </div>
                             
@@ -319,7 +319,7 @@ require_once 'includes/header.php';
                     </div>
                     <div class="modal-footer border-top-0 pt-0 mt-3">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" name="create_test" class="btn btn-gradient px-4">Create & Schedule Test</button>
+                        <button type="submit" name="create_test" class="btn btn-gradient px-4">Create Question Set</button>
                     </div>
                 </form>
             </div>
@@ -353,7 +353,7 @@ require_once 'includes/header.php';
     
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-            <a href="manage_tests.php" class="text-muted text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to Weekly Tests</a>
+            <a href="manage_tests.php" class="text-muted text-decoration-none small"><i class="bi bi-arrow-left me-1"></i>Back to Weekly Questions</a>
             <h2 class="fw-bold mb-0 mt-1"><?php echo htmlspecialchars($test['title']); ?></h2>
             <div class="text-muted small mt-1">
                 <span class="badge bg-primary rounded-pill me-2"><?php echo htmlspecialchars($test['test_period']); ?></span>
@@ -408,7 +408,7 @@ require_once 'includes/header.php';
         <div class="card-modern p-5 text-center">
             <i class="bi bi-question-circle display-4 text-muted mb-3 d-block"></i>
             <h5 class="fw-bold text-muted">No Questions Added Yet</h5>
-            <p class="text-secondary mb-3">Prepare questions beforehand for this weekly test period.</p>
+            <p class="text-secondary mb-3">Prepare questions beforehand for this weekly period.</p>
             <button class="btn btn-gradient rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
                 <i class="bi bi-plus-lg me-2"></i> Add First Question
             </button>
@@ -432,27 +432,28 @@ require_once 'includes/header.php';
                         
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label text-muted fw-medium">Option A</label>
-                                <input type="text" class="form-control" name="option_a" required>
+                                <label class="form-label text-muted fw-medium">Option A (Optional)</label>
+                                <input type="text" class="form-control" name="option_a">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label text-muted fw-medium">Option B</label>
-                                <input type="text" class="form-control" name="option_b" required>
+                                <label class="form-label text-muted fw-medium">Option B (Optional)</label>
+                                <input type="text" class="form-control" name="option_b">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label text-muted fw-medium">Option C</label>
-                                <input type="text" class="form-control" name="option_c" required>
+                                <label class="form-label text-muted fw-medium">Option C (Optional)</label>
+                                <input type="text" class="form-control" name="option_c">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label text-muted fw-medium">Option D</label>
-                                <input type="text" class="form-control" name="option_d" required>
+                                <label class="form-label text-muted fw-medium">Option D (Optional)</label>
+                                <input type="text" class="form-control" name="option_d">
                             </div>
                         </div>
                         
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label text-muted fw-medium">Correct Option</label>
-                                <select class="form-select" name="correct_option" required>
+                                <label class="form-label text-muted fw-medium">Correct Option (If MCQ)</label>
+                                <select class="form-select" name="correct_option">
+                                    <option value="">None (Descriptive Question)</option>
                                     <option value="A">Option A</option>
                                     <option value="B">Option B</option>
                                     <option value="C">Option C</option>

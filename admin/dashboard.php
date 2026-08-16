@@ -31,7 +31,7 @@ $recent_logs = $stmt->fetchAll();
 </div>
 
 <div class="row animate-on-scroll fade-in-up">
-    <div class="col-md-3 mb-4 delay-100">
+    <div class="col-md-4 mb-4 delay-100">
         <div class="card premium-glass-card tilt-card h-100">
             <div class="glare-effect"></div>
             <div class="card-body">
@@ -44,7 +44,7 @@ $recent_logs = $stmt->fetchAll();
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-4 delay-200">
+    <div class="col-md-4 mb-4 delay-200">
         <div class="card premium-glass-card tilt-card h-100">
             <div class="glare-effect"></div>
             <div class="card-body">
@@ -57,7 +57,7 @@ $recent_logs = $stmt->fetchAll();
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-4 delay-300">
+    <div class="col-md-4 mb-4 delay-300">
         <div class="card premium-glass-card tilt-card h-100">
             <div class="glare-effect"></div>
             <div class="card-body">
@@ -66,19 +66,6 @@ $recent_logs = $stmt->fetchAll();
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
                 <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="departments.php">View Details</a>
-                <div class="small premium-text hover-bounce-icon"><i class="bi bi-chevron-right"></i></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4 delay-400">
-        <div class="card premium-glass-card tilt-card h-100">
-            <div class="glare-effect"></div>
-            <div class="card-body">
-                <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #ef4444;">Total Classes</h5>
-                <h2 class="display-4 count-up fw-bold neon-text" data-count="<?php echo $stats['classes']; ?>"><?php echo $stats['classes']; ?></h2>
-            </div>
-            <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
-                <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="classes.php">View Details</a>
                 <div class="small premium-text hover-bounce-icon"><i class="bi bi-chevron-right"></i></div>
             </div>
         </div>

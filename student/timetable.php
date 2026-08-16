@@ -59,12 +59,16 @@ $default_timings = [
                     <thead class="table-light">
                         <tr>
                             <th>Day / Period</th>
-                            <?php foreach ($periods as $p): ?>
-                                <th>
-                                    Period <?php echo $p; ?><br>
-                                    <small class="text-muted"><?php echo $default_timings[$p][0] . ' - ' . $default_timings[$p][1]; ?></small>
-                                </th>
-                            <?php endforeach; ?>
+                            <th>Period 1<br><small class="text-muted">09:00 - 09:50</small></th>
+                            <th>Period 2<br><small class="text-muted">09:50 - 10:40</small></th>
+                            <th class="table-warning text-dark align-middle" style="width: 50px;">Break 1</th>
+                            <th>Period 3<br><small class="text-muted">10:50 - 11:40</small></th>
+                            <th>Period 4<br><small class="text-muted">11:40 - 12:30</small></th>
+                            <th class="table-warning text-dark align-middle" style="width: 50px;">Lunch</th>
+                            <th>Period 5<br><small class="text-muted">13:30 - 14:20</small></th>
+                            <th>Period 6<br><small class="text-muted">14:20 - 15:10</small></th>
+                            <th class="table-warning text-dark align-middle" style="width: 50px;">Break 2</th>
+                            <th>Period 7<br><small class="text-muted">15:20 - 16:10</small></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,6 +77,10 @@ $default_timings = [
                                 <th class="table-light align-middle"><?php echo $day; ?></th>
                                 <?php foreach ($periods as $p): ?>
                                     <?php 
+                                    if ($p == 3) echo '<td class="table-warning text-dark align-middle border-start border-end" rowspan="1"><div style="writing-mode: vertical-rl; text-orientation: mixed; margin:auto;">BREAK</div></td>';
+                                    if ($p == 5) echo '<td class="table-warning text-dark align-middle border-start border-end" rowspan="1"><div style="writing-mode: vertical-rl; text-orientation: mixed; margin:auto;">LUNCH</div></td>';
+                                    if ($p == 7) echo '<td class="table-warning text-dark align-middle border-start border-end" rowspan="1"><div style="writing-mode: vertical-rl; text-orientation: mixed; margin:auto;">BREAK</div></td>';
+                                    
                                     $cell = $timetable[$day][$p] ?? null; 
                                     $cell_class = $cell ? 'bg-light' : '';
                                     if ($day == date('l') && $cell) {
@@ -88,6 +96,9 @@ $default_timings = [
                                                 <?php echo htmlspecialchars($cell['subject_code']); ?>
                                             </div>
                                             <div class="small fw-semibold"><?php echo htmlspecialchars($cell['subject_name']); ?></div>
+                                            <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
+                                        <?php elseif ($cell && empty($cell['subject_id'])): ?>
+                                            <div class="text-danger fw-bold small fst-italic mb-2">TEST PERIOD</div>
                                             <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
                                         <?php else: ?>
                                             <div class="<?php echo ($cell_class == 'bg-primary text-white') ? 'text-white' : 'text-muted'; ?> small fst-italic">Free Period</div>

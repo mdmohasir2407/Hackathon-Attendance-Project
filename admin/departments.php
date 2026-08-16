@@ -19,6 +19,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     }
 }
 
+// Handle Edit Department
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'edit') {
+    $id = $_POST['id'];
+    $name = trim($_POST['name']);
+    $code = trim($_POST['code']);
+    
+    if (!empty($id) && !empty($name) && !empty($code)) {
+        try {
+            $stmt = $pdo->prepare("UPDATE departments SET name = ?, code = ? WHERE id = ?");
+            $stmt->execute([$name, $code, $id]);
+            $success_msg = "Department updated successfully.";
+        } catch(PDOException $e) {
+            $error_msg = "Error updating department. Code or Name might already exist.";
+        }
+    } else {
+        $error_msg = "All fields are required.";
+    }
+}
+
 // Handle Delete Department
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
@@ -78,6 +97,9 @@ $departments = $stmt->fetchAll();
                         <td><?php echo htmlspecialchars($dept['name']); ?></td>
                         <td><?php echo date('M d, Y', strtotime($dept['created_at'])); ?></td>
                         <td>
+                            <button class="btn btn-sm btn-outline-primary me-1 edit-btn" data-id="<?php echo $dept['id']; ?>" data-code="<?php echo htmlspecialchars($dept['code']); ?>" data-name="<?php echo htmlspecialchars($dept['name']); ?>">
+                                <i class="bi bi-pencil"></i>
+                            </button>
                             <a href="?delete=<?php echo $dept['id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this department?');">
                                 <i class="bi bi-trash"></i>
                             </a>
@@ -121,5 +143,52 @@ $departments = $stmt->fetchAll();
         </div>
     </div>
 </div>
+
+<!-- Edit Department Modal -->
+<div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDepartmentModalLabel">Edit Department</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="departments.php" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" id="edit_id" name="id">
+                    <div class="mb-3">
+                        <label for="edit_code" class="form-label">Department Code</label>
+                        <input type="text" class="form-control" id="edit_code" name="code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_name" class="form-label">Department Name</label>
+                        <input type="text" class="form-control" id="edit_name" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Department</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('.edit-btn').on('click', function() {
+        var id = $(this).data('id');
+        var code = $(this).data('code');
+        var name = $(this).data('name');
+        
+        $('#edit_id').val(id);
+        $('#edit_code').val(code);
+        $('#edit_name').val(name);
+        
+        var editModal = new bootstrap.Modal(document.getElementById('editDepartmentModal'));
+        editModal.show();
+    });
+});
+</script>
 
 <?php require_once 'includes/footer.php'; ?>

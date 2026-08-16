@@ -65,6 +65,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     } else {
         $error_msg = "Please fill all required fields.";
     }
+} elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'edit') {
+    $id = $_POST['assignment_id'];
+    $title = trim($_POST['title']);
+    $description = trim($_POST['description']);
+    $deadline = $_POST['deadline'];
+    
+    if ($id && !empty($title) && !empty($deadline)) {
+        try {
+            $stmt = $pdo->prepare("UPDATE assignments SET title = ?, description = ?, deadline = ? WHERE id = ? AND teacher_id = ?");
+            $stmt->execute([$title, $description, $deadline, $id, $teacher_id]);
+            $success_msg = "Assignment updated successfully.";
+        } catch (PDOException $e) {
+            $error_msg = "Database error while updating assignment.";
+        }
+    } else {
+        $error_msg = "Please fill all required fields.";
+    }
 }
 
 // Fetch created assignments
@@ -109,7 +126,16 @@ $assignments_list = $stmt->fetchAll();
         <div class="card shadow-sm h-100">
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
                 <span class="badge bg-primary"><?php echo htmlspecialchars($a['subject_name']); ?></span>
-                <small class="text-muted">Due: <?php echo date('M d, Y h:i A', strtotime($a['deadline'])); ?></small>
+                <div>
+                    <small class="text-muted me-2">Due: <?php echo date('M d, Y h:i A', strtotime($a['deadline'])); ?></small>
+                    <button class="btn btn-sm btn-outline-primary edit-assignment-btn" 
+                        data-id="<?php echo $a['id']; ?>" 
+                        data-title="<?php echo htmlspecialchars($a['title']); ?>" 
+                        data-description="<?php echo htmlspecialchars($a['description']); ?>" 
+                        data-deadline="<?php echo date('Y-m-d\TH:i', strtotime($a['deadline'])); ?>">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </div>
             </div>
             <div class="card-body">
                 <h5 class="card-title text-truncate"><?php echo htmlspecialchars($a['title']); ?></h5>
@@ -201,5 +227,64 @@ $assignments_list = $stmt->fetchAll();
         </div>
     </div>
 </div>
+
+<!-- Edit Assignment Modal -->
+<div class="modal fade" id="editAssignmentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Assignment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="assignments.php" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" name="assignment_id" id="edit_assignment_id" value="">
+                    
+                    <div class="mb-3">
+                        <label for="edit_deadline" class="form-label">Deadline</label>
+                        <input type="datetime-local" class="form-control" id="edit_deadline" name="deadline" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_title" class="form-label">Assignment Title</label>
+                        <input type="text" class="form-control" id="edit_title" name="title" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_description" class="form-label">Instructions / Description</label>
+                        <textarea class="form-control" id="edit_description" name="description" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.edit-assignment-btn');
+    editButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const title = this.getAttribute('data-title');
+            const desc = this.getAttribute('data-description');
+            const deadline = this.getAttribute('data-deadline');
+            
+            document.getElementById('edit_assignment_id').value = id;
+            document.getElementById('edit_title').value = title;
+            document.getElementById('edit_description').value = desc;
+            document.getElementById('edit_deadline').value = deadline;
+            
+            const modal = new bootstrap.Modal(document.getElementById('editAssignmentModal'));
+            modal.show();
+        });
+    });
+});
+</script>
 
 <?php require_once 'includes/footer.php'; ?>

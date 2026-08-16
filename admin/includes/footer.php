@@ -37,6 +37,9 @@
             }
             var target = $('.sidebar .nav-link[href="'+path+'"]');
             target.addClass('active');
+
+            // Fix modal stacking issue by moving all modals to the body
+            $('.modal').appendTo('body');
         });
     </script>
     

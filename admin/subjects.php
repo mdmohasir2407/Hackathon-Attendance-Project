@@ -99,6 +99,61 @@ $semesters = $sem_stmt->fetchAll();
             </form>
         </div>
     </div>
+<!-- Edit Subject Modal -->
+<div class="modal fade" id="editSubjectModal" tabindex="-1" aria-labelledby="editSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSubjectModalLabel">Edit Subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editSubjectForm">
+                <div class="modal-body">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" id="edit_id" name="id">
+                    
+                    <div class="mb-3">
+                        <label for="edit_code" class="form-label">Subject Code</label>
+                        <input type="text" class="form-control" id="edit_code" name="code" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_name" class="form-label">Subject Name</label>
+                        <input type="text" class="form-control" id="edit_name" name="name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_department_id" class="form-label">Department</label>
+                        <select class="form-select" id="edit_department_id" name="department_id" required>
+                            <option value="">Select Department...</option>
+                            <?php foreach($departments as $dept): ?>
+                                <option value="<?php echo $dept['id']; ?>"><?php echo htmlspecialchars($dept['name']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_semester_id" class="form-label">Semester</label>
+                        <select class="form-select" id="edit_semester_id" name="semester_id" required>
+                            <option value="">Select Semester...</option>
+                            <?php foreach($semesters as $sem): ?>
+                                <option value="<?php echo $sem['id']; ?>"><?php echo htmlspecialchars($sem['name'] . ' - ' . $sem['ay_name']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_credits" class="form-label">Credits</label>
+                        <input type="number" class="form-control" id="edit_credits" name="credits" min="1" max="10" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Subject</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -131,6 +186,7 @@ $(document).ready(function() {
                                 '<td>' + subject.credits + '</td>' +
                                 '<td>' + statusBadge + '</td>' +
                                 '<td>' +
+                                    '<button class="btn btn-sm btn-outline-primary me-1 edit-btn" data-id="' + subject.id + '" data-code="' + subject.code + '" data-name="' + subject.name + '" data-dept="' + subject.department_id + '" data-sem="' + subject.semester_id + '" data-cred="' + subject.credits + '" title="Edit"><i class="bi bi-pencil"></i></button>' +
                                     '<button class="btn btn-sm ' + toggleBtnClass + ' toggle-status-btn me-1" data-id="' + subject.id + '" data-action="' + toggleAction + '" title="Toggle Status"><i class="bi ' + toggleIcon + '"></i></button>' +
                                     '<button class="btn btn-sm btn-outline-danger delete-btn" data-id="' + subject.id + '" title="Delete"><i class="bi bi-trash"></i></button>' +
                                 '</td>' +
@@ -173,6 +229,47 @@ $(document).ready(function() {
                 showAlert('danger', 'An error occurred while saving the subject.');
             }
         });
+    });
+
+    $('#editSubjectForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '../api/subjects.php',
+            type: 'POST',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if(response.success) {
+                    $('#editSubjectModal').modal('hide');
+                    showAlert('success', response.message);
+                    loadSubjects();
+                } else {
+                    showAlert('danger', response.message);
+                }
+            },
+            error: function() {
+                showAlert('danger', 'An error occurred while updating the subject.');
+            }
+        });
+    });
+
+    $(document).on('click', '.edit-btn', function() {
+        var id = $(this).data('id');
+        var code = $(this).data('code');
+        var name = $(this).data('name');
+        var dept = $(this).data('dept');
+        var sem = $(this).data('sem');
+        var cred = $(this).data('cred');
+
+        $('#edit_id').val(id);
+        $('#edit_code').val(code);
+        $('#edit_name').val(name);
+        $('#edit_department_id').val(dept);
+        $('#edit_semester_id').val(sem);
+        $('#edit_credits').val(cred);
+
+        var editModal = new bootstrap.Modal(document.getElementById('editSubjectModal'));
+        editModal.show();
     });
 
     $(document).on('click', '.toggle-status-btn', function() {

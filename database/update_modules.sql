@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS gate_permissions (
     reason TEXT NOT NULL,
     request_date DATE NOT NULL,
     time_out TIME NOT NULL,
-    expected_time_in TIME NOT NULL,
+    expected_time_in TIME NULL,
     status ENUM('Pending', 'Approved', 'Rejected') DEFAULT 'Pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE

@@ -22,15 +22,7 @@ require_once 'includes/header.php';
             </div>
         </div>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title fs-6">Manual Entry</h5>
-                <form id="manualEntryForm" class="d-flex">
-                    <input type="text" id="manualToken" class="form-control me-2" placeholder="Enter Token Manually" required>
-                    <button type="submit" class="btn btn-outline-primary">Submit</button>
-                </form>
-            </div>
-        </div>
+
     </div>
 </div>
 
@@ -92,18 +84,16 @@ $(document).ready(function() {
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
-        { fps: 10, qrbox: {width: 250, height: 250} },
+        { 
+            fps: 10, 
+            qrbox: {width: 250, height: 250},
+            videoConstraints: { facingMode: "user" }
+        },
         /* verbose= */ false);
     
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
-    $('#manualEntryForm').on('submit', function(e) {
-        e.preventDefault();
-        let token = $('#manualToken').val().trim();
-        if(token) {
-            processQRToken(token);
-        }
-    });
+
 });
 </script>
 

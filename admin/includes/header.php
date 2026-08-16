@@ -29,7 +29,12 @@ require_once '../config/database.php';
             document.body.classList.add('dark-mode');
         }
     </script>
-    <div class="mesh-bg"></div>
+    <div class="dashboard-3d-bg">
+        <div class="dashboard-3d-grid"></div>
+        <div class="dashboard-orb d-orb-1"></div>
+        <div class="dashboard-orb d-orb-2"></div>
+        <div class="dashboard-orb d-orb-3"></div>
+    </div>
     <div class="wrapper">
         <!-- Sidebar -->
         <nav class="sidebar" id="sidebarMenu">
@@ -45,11 +50,7 @@ require_once '../config/database.php';
                             <i class="bi bi-building"></i> Departments
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="classes.php">
-                            <i class="bi bi-easel"></i> Classes
-                        </a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="subjects.php">
                             <i class="bi bi-book"></i> Subjects
@@ -127,7 +128,7 @@ require_once '../config/database.php';
                 <!-- Profile Dropdown -->
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../<?php echo htmlspecialchars($_SESSION['profile_pic'] ?? 'assets/images/default-avatar.png'); ?>" alt="Profile" width="40" height="40" class="rounded-circle shadow-sm me-2" style="object-fit: cover;">
+                        <img src="../<?php echo !empty($_SESSION['profile_pic']) ? htmlspecialchars($_SESSION['profile_pic']) : 'assets/images/default-avatar.png'; ?>" alt="" width="40" height="40" class="rounded-circle shadow-sm me-2" style="object-fit: cover; background: var(--bg-card);">
                         <span class="fw-medium text-dark d-none d-sm-inline">Welcome, <?php echo htmlspecialchars($_SESSION['name'] ?? 'Admin'); ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="dropdownUser">

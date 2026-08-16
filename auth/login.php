@@ -22,19 +22,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($email) || empty($password) || empty($role)) {
         $error = 'Please fill in all fields and select a role.';
     } else {
-        $stmt = $pdo->prepare("SELECT id, password_hash, role, profile_pic FROM users WHERE email = :email AND role = :role");
+        $stmt = $pdo->prepare("SELECT id, password_hash, role FROM users WHERE email = :email AND role = :role");
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':role', $role, PDO::PARAM_STR);
         $stmt->execute();
         
-        if ($stmt->rowCount() == 1) {
+        if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch();
             if (password_verify($password, $user['password_hash'])) {
                 // Password is correct, start a new session
                 session_regenerate_id(true);
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['role'] = $user['role'];
-                $_SESSION['profile_pic'] = $user['profile_pic'] ?: 'assets/images/default-avatar.png';
+                $_SESSION['profile_pic'] = $user['profile_pic'] ?? 'assets/images/default-avatar.png';
                 
                 // Fetch name based on role and log activity
                 $name = 'User';
@@ -206,73 +206,7 @@ function log_activity($pdo, $user_id, $action) {
             font-weight: 700;
         }
 
-        /* Perfectly Blended Slow Changing Gradient Background */
-        .animated-bg {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 0;
-            /* Distinct colors so the slow shifting is highly visible (Cyan -> Purple -> Pink -> Mint -> Cyan) */
-            background: linear-gradient(-45deg, #7dd3fc, #c4b5fd, #f9a8d4, #a7f3d0, #7dd3fc);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            overflow: hidden;
-            transition: opacity 0.5s ease;
-        }
 
-        body.dark-mode .animated-bg {
-            opacity: 0; /* Hide in dark mode */
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 3D Glass Cells */
-        .cell {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0.1) 90%);
-            box-shadow: 
-                inset 10px 10px 30px rgba(14, 165, 233, 0.3), 
-                inset -10px -10px 30px rgba(139, 92, 246, 0.2), 
-                10px 20px 30px rgba(0, 0, 0, 0.1); 
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            animation: cellFloat linear infinite alternate;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-        }
-
-        /* College Core inside Cells */
-        .cell i {
-            font-size: 3.5rem;
-            color: rgba(14, 165, 233, 0.8);
-            filter: drop-shadow(0 5px 15px rgba(14, 165, 233, 0.4));
-            animation: pulseIcon 4s infinite alternate;
-        }
-
-        /* Different cell sizes and positions */
-        .c1 { width: 180px; height: 180px; top: 10%; left: 15%; animation-duration: 12s; }
-        .c2 { width: 280px; height: 280px; bottom: 5%; right: 10%; animation-duration: 18s; animation-delay: -5s; }
-        .c2 i { font-size: 6rem; color: rgba(139, 92, 246, 0.7); filter: drop-shadow(0 5px 20px rgba(139, 92, 246, 0.4)); }
-        .c3 { width: 120px; height: 120px; top: 40%; right: 25%; animation-duration: 9s; animation-delay: -2s; }
-        .c3 i { font-size: 2.5rem; color: rgba(16, 185, 129, 0.7); }
-        .c4 { width: 200px; height: 200px; bottom: 15%; left: 10%; animation-duration: 15s; animation-delay: -7s; }
-        .c4 i { font-size: 4rem; color: rgba(245, 158, 11, 0.7); }
-        .c5 { width: 140px; height: 140px; top: 20%; left: 50%; animation-duration: 11s; animation-delay: -4s; }
-
-        @keyframes cellFloat {
-            0% { transform: translateY(0) translateX(0) scale(1) rotate(0deg); }
-            100% { transform: translateY(-40px) translateX(30px) scale(1.05) rotate(15deg); }
-        }
-        @keyframes pulseIcon {
-            0% { transform: scale(0.9); opacity: 0.7; }
-            100% { transform: scale(1.1); opacity: 1; }
-        }
 
         .login-wrapper {
             position: relative;
@@ -375,9 +309,9 @@ function log_activity($pdo, $user_id, $action) {
             <div class="glare-effect"></div>
             
             <div class="text-center mb-4 hover-bounce-icon">
-                <i class="bi bi-hexagon-fill" style="font-size: 3rem; color: var(--premium-accent); filter: drop-shadow(0 0 15px var(--premium-accent));"></i>
-                <h2 class="mt-3 fw-bold neon-text premium-text">Welcome Back</h2>
-                <p class="premium-text-muted">Sign in to Campus Nova</p>
+                <i class="bi bi-hexagon-fill" style="font-size: 3rem; color: #0ea5e9; filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.5));"></i>
+                <h2 class="mt-3 fw-bold" style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Welcome Back</h2>
+                <p class="text-secondary fw-bold">Sign in to Campus Nova</p>
             </div>
             
             <?php if(!empty($error)): ?>
@@ -407,9 +341,12 @@ function log_activity($pdo, $user_id, $action) {
                     <label for="email"><i class="bi bi-envelope me-1"></i> Email Address</label>
                 </div>
                 
-                <div class="form-floating mb-4 hover-bounce-icon">
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                <div class="form-floating mb-4 hover-bounce-icon position-relative">
+                    <input type="password" name="password" class="form-control pe-5" id="password" placeholder="Password" required>
                     <label for="password"><i class="bi bi-key me-1"></i> Password</label>
+                    <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-0 border-0 text-muted" id="togglePassword" style="z-index: 5;" tabindex="-1">
+                        <i class="bi bi-eye-slash fs-5" id="toggleIcon"></i>
+                    </button>
                 </div>
                 
                 <button type="submit" class="btn btn-gradient w-100 py-2 fs-5">Sign In</button>
@@ -461,6 +398,20 @@ function log_activity($pdo, $user_id, $action) {
             }
             localStorage.setItem('theme', theme);
         });
+
+        // Password Toggle Logic
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        if (togglePassword && password && toggleIcon) {
+            togglePassword.addEventListener('click', function () {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                toggleIcon.classList.toggle('bi-eye');
+                toggleIcon.classList.toggle('bi-eye-slash');
+            });
+        }
     </script>
 </body>
 </html>

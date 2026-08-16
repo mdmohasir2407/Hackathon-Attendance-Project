@@ -12,7 +12,7 @@ body.dark-mode {
     --border-color: #334155;
     
     --glass-bg: rgba(30, 41, 59, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(0, 240, 255, 0.2);
     
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
@@ -76,4 +76,71 @@ body.dark-mode .mock-stat-card {
 body.dark-mode .mock-stat-card:hover {
     background: #334155;
     box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+}
+
+/* Exhaustive Dark Mode Overrides */
+body.dark-mode .bg-white,
+body.dark-mode .bg-light {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode .table,
+body.dark-mode .table-modern,
+body.dark-mode table {
+    color: var(--text-primary) !important;
+    background-color: var(--bg-card) !important;
+}
+
+body.dark-mode .table > :not(caption) > * > *,
+body.dark-mode .table-modern > :not(caption) > * > * {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+body.dark-mode .text-dark {
+    color: var(--text-primary) !important;
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+    border-color: var(--border-color) !important;
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .dropdown-item {
+    color: var(--text-primary);
+}
+
+body.dark-mode .dropdown-item:hover,
+body.dark-mode .dropdown-item:focus {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+body.dark-mode .dropdown-divider {
+    border-color: var(--border-color);
+}
+
+body.dark-mode .list-group-item {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+body.dark-mode .list-group-item-action:hover,
+body.dark-mode .list-group-item-action:focus {
+    background-color: var(--border-color);
+    color: var(--text-primary);
 }

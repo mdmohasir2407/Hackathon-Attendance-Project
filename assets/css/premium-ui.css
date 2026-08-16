@@ -552,3 +552,189 @@ body:not(.dark-mode) .form-control, body:not(.dark-mode) .form-select {
         margin: 0 auto;
     }
 }
+
+/* 3D Global Hover & Focus Effects for Inputs and Buttons */
+.form-control, .form-select, textarea {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.form-control:hover, .form-select:hover, textarea:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.1);
+}
+
+.form-control:focus, .form-select:focus, textarea:focus {
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.25), 0 10px 20px rgba(0,0,0,0.1) !important;
+    border-color: var(--primary) !important;
+}
+
+body.dark-mode .form-control:focus, body.dark-mode .form-select:focus, body.dark-mode textarea:focus {
+    box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2), 0 10px 25px rgba(0,0,0,0.4) !important;
+    border-color: var(--premium-accent) !important;
+}
+
+/* Universal Button Magnetic Effect */
+.btn {
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:not(.btn-close):hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+}
+
+body.dark-mode .btn:not(.btn-close):hover {
+    box-shadow: 0 8px 25px rgba(0, 240, 255, 0.4);
+}
+
+/* Perfectly Blended Slow Changing Gradient Background */
+.animated-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    /* Distinct colors so the slow shifting is highly visible */
+    background: linear-gradient(-45deg, #7dd3fc, #c4b5fd, #f9a8d4, #a7f3d0, #7dd3fc);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+body.dark-mode .animated-bg {
+    /* Sophisticated Dark Mode Gradient */
+    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #1e3a8a, #0f172a);
+    background-size: 400% 400%;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 3D Glass Cells */
+.cell {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0.1) 90%);
+    box-shadow: 
+        inset 10px 10px 30px rgba(14, 165, 233, 0.3), 
+        inset -10px -10px 30px rgba(139, 92, 246, 0.2), 
+        10px 20px 30px rgba(0, 0, 0, 0.1); 
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    animation: cellFloat linear infinite alternate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transition: all 0.5s ease;
+}
+
+body.dark-mode .cell {
+    background: radial-gradient(circle at 30% 30%, rgba(10, 10, 15, 0.9), rgba(5, 5, 10, 0.8) 60%, rgba(0, 0, 0, 0.95) 90%);
+    box-shadow: 
+        inset 5px 5px 20px rgba(0, 240, 255, 0.3), 
+        inset -5px -5px 20px rgba(139, 92, 246, 0.3), 
+        0 10px 30px rgba(0, 0, 0, 0.9); 
+    border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+/* College Core inside Cells */
+.cell i {
+    font-size: 3.5rem;
+    color: rgba(14, 165, 233, 0.8);
+    filter: drop-shadow(0 5px 15px rgba(14, 165, 233, 0.4));
+    animation: pulseIcon 4s infinite alternate;
+    transition: all 0.5s ease;
+}
+
+body.dark-mode .cell i {
+    color: rgba(0, 240, 255, 0.9);
+    filter: drop-shadow(0 5px 15px rgba(0, 240, 255, 0.6));
+}
+
+/* Different cell sizes and positions */
+.c1 { width: 180px; height: 180px; top: 10%; left: 15%; animation-duration: 12s; }
+.c2 { width: 280px; height: 280px; bottom: 5%; right: 10%; animation-duration: 18s; animation-delay: -5s; }
+.c2 i { font-size: 6rem; color: rgba(139, 92, 246, 0.7); filter: drop-shadow(0 5px 20px rgba(139, 92, 246, 0.4)); }
+body.dark-mode .c2 i { color: rgba(167, 139, 250, 0.9); filter: drop-shadow(0 5px 20px rgba(167, 139, 250, 0.6)); }
+
+.c3 { width: 120px; height: 120px; top: 40%; right: 25%; animation-duration: 9s; animation-delay: -2s; }
+.c3 i { font-size: 2.5rem; color: rgba(16, 185, 129, 0.7); }
+body.dark-mode .c3 i { color: rgba(52, 211, 153, 0.9); filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.6)); }
+
+.c4 { width: 200px; height: 200px; bottom: 15%; left: 10%; animation-duration: 15s; animation-delay: -7s; }
+.c4 i { font-size: 4rem; color: rgba(245, 158, 11, 0.7); }
+body.dark-mode .c4 i { color: rgba(251, 191, 36, 0.9); filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.6)); }
+
+.c5 { width: 140px; height: 140px; top: 20%; left: 50%; animation-duration: 11s; animation-delay: -4s; }
+
+@keyframes cellFloat {
+    0% { transform: translateY(0) translateX(0) scale(1) rotate(0deg); }
+    100% { transform: translateY(-40px) translateX(30px) scale(1.05) rotate(15deg); }
+}
+@keyframes pulseIcon {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    100% { transform: scale(1.1); opacity: 1; }
+}
+
+/* ------------------------------------------------------------- */
+/* DASHBOARD EXCLUSIVE 3D NEON GRID ANIMATION (Dark Mode)        */
+/* ------------------------------------------------------------- */
+.dashboard-3d-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    background: var(--bg-main);
+    display: none;
+    perspective: 1000px;
+}
+
+body.dark-mode .dashboard-3d-bg {
+    display: block;
+    background: #0f172a;
+}
+
+.dashboard-3d-grid {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    bottom: -50%;
+    left: -50%;
+    background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.15) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: rotateX(75deg);
+    transform-origin: center center;
+    animation: gridMove 15s linear infinite;
+    pointer-events: none;
+    box-shadow: inset 0 0 100px rgba(15, 23, 42, 1);
+}
+
+@keyframes gridMove {
+    0% { transform: rotateX(75deg) translateY(0); }
+    100% { transform: rotateX(75deg) translateY(60px); }
+}
+
+.dashboard-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+    animation: orbFloat 20s infinite alternate ease-in-out;
+    pointer-events: none;
+}
+.d-orb-1 { width: 400px; height: 400px; background: rgba(0, 240, 255, 0.3); top: -10%; left: 10%; animation-delay: 0s; }
+.d-orb-2 { width: 500px; height: 500px; background: rgba(139, 92, 246, 0.25); bottom: -10%; right: 5%; animation-delay: -7s; }
+.d-orb-3 { width: 300px; height: 300px; background: rgba(236, 72, 153, 0.2); top: 40%; left: 70%; animation-delay: -14s; }
+
+@keyframes orbFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(100px, -50px) scale(1.2); }
+}

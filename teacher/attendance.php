@@ -53,7 +53,7 @@ if (isset($_GET['session_id'])) {
     <!-- Session List -->
     <div class="col-md-5 mb-4">
         <div class="card shadow-sm h-100">
-            <div class="card-header bg-white">
+            <div class="card-header">
                 <i class="bi bi-calendar-check me-1"></i> Past Sessions
             </div>
             <div class="card-body p-0">
@@ -61,7 +61,7 @@ if (isset($_GET['session_id'])) {
                     <?php foreach($sessions as $s): 
                         $pct = $s['total_students'] > 0 ? round(($s['present_count'] / $s['total_students']) * 100) : 0;
                     ?>
-                    <a href="?session_id=<?php echo $s['id']; ?>" class="list-group-item list-group-item-action <?php echo ($selected_session == $s['id']) ? 'active' : ''; ?>">
+                    <a href="?session_id=<?php echo $s['id']; ?>" class="list-group-item list-group-item-action bg-transparent text-light <?php echo ($selected_session == $s['id']) ? 'active' : ''; ?>">
                         <div class="d-flex w-100 justify-content-between">
                             <h6 class="mb-1 fw-bold"><?php echo htmlspecialchars($s['class_name'] . ' - ' . $s['subject_name']); ?></h6>
                             <small><?php echo date('M d, Y', strtotime($s['date'])); ?></small>
@@ -84,7 +84,7 @@ if (isset($_GET['session_id'])) {
     <!-- Session Details -->
     <div class="col-md-7 mb-4">
         <div class="card shadow-sm h-100">
-            <div class="card-header bg-white">
+            <div class="card-header">
                 <i class="bi bi-people me-1"></i> Session Details
             </div>
             <div class="card-body p-0">

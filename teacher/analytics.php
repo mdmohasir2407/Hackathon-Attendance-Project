@@ -59,7 +59,7 @@ $at_risk_students = $stmt->fetchAll();
 <div class="row mb-4">
     <div class="col-md-6">
         <div class="card shadow-sm h-100">
-            <div class="card-header bg-white">
+            <div class="card-header">
                 <i class="bi bi-graph-up me-1 text-primary"></i> Assignment Submissions by Subject
             </div>
             <div class="card-body">
@@ -96,24 +96,45 @@ const subjData = <?php echo json_encode($subj_data); ?>;
 
 document.addEventListener("DOMContentLoaded", function() {
     const ctx = document.getElementById('perfChart').getContext('2d');
+    
+    // Create gradient
+    let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(14, 165, 233, 0.8)');   
+    gradient.addColorStop(1, 'rgba(14, 165, 233, 0.2)');
+
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: subjLabels,
             datasets: [{
                 label: 'Total Submissions',
                 data: subjData,
-                backgroundColor: 'rgba(25, 135, 84, 0.2)',
-                borderColor: 'rgba(25, 135, 84, 1)',
-                borderWidth: 2,
-                fill: true,
-                tension: 0.4
+                backgroundColor: gradient,
+                borderColor: 'rgba(14, 165, 233, 1)',
+                borderWidth: 1,
+                borderRadius: 5,
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
             scales: {
-                y: { beginAtZero: true }
+                y: { 
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(200, 200, 200, 0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
             }
         }
     });

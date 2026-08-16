@@ -16,12 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $time_out = $_POST['time_out'] ?? '';
     $time_in = $_POST['time_in'] ?? '';
 
-    if (empty($reason) || empty($date) || empty($time_out) || empty($time_in)) {
-        $error = "All fields are required.";
+    if (empty($reason) || empty($date) || empty($time_out)) {
+        $error = "Date, time out, and reason are required.";
     } else {
         try {
             $stmt = $pdo->prepare("INSERT INTO gate_permissions (student_id, reason, request_date, time_out, expected_time_in, status) VALUES (?, ?, ?, ?, ?, 'Pending')");
-            $stmt->execute([$_SESSION['user_id'], $reason, $date, $time_out, $time_in]);
+            $stmt->execute([$_SESSION['user_id'], $reason, $date, $time_out, $time_in ?: null]);
             $success = "Gate permission requested successfully.";
         } catch (PDOException $e) {
             $error = "Failed to submit request.";
@@ -68,7 +68,7 @@ $requests = $stmt->fetchAll();
                     <tr>
                         <td><?php echo date('M d, Y', strtotime($req['request_date'])); ?></td>
                         <td><?php echo date('h:i A', strtotime($req['time_out'])); ?></td>
-                        <td><?php echo date('h:i A', strtotime($req['expected_time_in'])); ?></td>
+                        <td><?php echo $req['expected_time_in'] ? date('h:i A', strtotime($req['expected_time_in'])) : '-'; ?></td>
                         <td><?php echo htmlspecialchars($req['reason']); ?></td>
                         <td>
                             <?php 
@@ -110,8 +110,8 @@ $requests = $stmt->fetchAll();
                             <input type="time" class="form-control" name="time_out" required>
                         </div>
                         <div class="col-6 mb-3">
-                            <label class="form-label fw-medium text-muted">Expected Time In</label>
-                            <input type="time" class="form-control" name="time_in" required>
+                            <label class="form-label fw-medium text-muted">Expected Time In (Optional)</label>
+                            <input type="time" class="form-control" name="time_in">
                         </div>
                     </div>
                     <div class="mb-3">

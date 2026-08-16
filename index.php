@@ -33,14 +33,28 @@ session_start();
 
         body {
             font-family: 'Inter', sans-serif;
-            color: var(--text-dark);
-            background-color: #f8fafc;
+            color: #f1f5f9; /* Light text for dark background */
+            background-color: #0f172a; /* Dark background for 3D effect */
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
         h1, h2, h3, h4, h5, h6, .navbar-brand {
             font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+        }
+        
+        .text-muted {
+            color: #94a3b8 !important; /* Lighter gray for readability on dark background */
+        }
+
+        #vanta-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
         }
 
         /* Glassmorphism Utilities */
@@ -120,20 +134,7 @@ session_start();
             position: relative;
         }
 
-        /* Ambient glowing orbs */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-        }
-        .orb-1 { width: 400px; height: 400px; background: rgba(56, 189, 248, 0.3); top: -100px; right: -100px; animation: float 6s infinite alternate ease-in-out; }
-        .orb-2 { width: 300px; height: 300px; background: rgba(129, 140, 248, 0.3); bottom: -50px; left: -50px; animation: float 8s infinite alternate-reverse ease-in-out; }
-        
-        @keyframes float {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(30px, 40px); }
-        }
+        /* Hero Content Styles */
 
         .hero-content {
             position: relative;
@@ -261,38 +262,107 @@ session_start();
         /* STATISTICS SECTION */
         .stats-section {
             padding: 60px 0;
-            background: white;
+            background: transparent;
         }
         .stat-item {
             text-align: center;
             padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(59, 130, 246, 0.1));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .stat-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.3);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+        .stat-item:hover::before {
+            opacity: 1;
+        }
+        .stat-item:hover .stat-number {
+            text-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
+            transform: scale(1.1);
+            display: inline-block;
         }
         .stat-number {
             font-size: 3rem;
             font-weight: 800;
             color: var(--primary-blue);
             margin-bottom: 0.5rem;
+            transition: transform 0.3s ease;
         }
 
         /* FEATURES SECTION */
         .features-section {
             padding: 100px 0;
-            background: #f8fafc;
+            background: transparent;
         }
         .feature-icon-wrapper {
             width: 60px; height: 60px;
             border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.8rem;
-            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-            color: var(--primary-blue);
+            background: rgba(14, 165, 233, 0.2);
+            color: #38bdf8;
             margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+        
+        .features-section .card {
+            background: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #f1f5f9;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        .features-section .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .features-section .card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(-5deg);
+            box-shadow: -10px 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(14, 165, 233, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.4) !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+        .features-section .card:hover::after {
+            transform: scaleX(1);
+        }
+        .features-section .card:hover .feature-icon-wrapper {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            color: white;
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.4);
         }
 
         /* HOW IT WORKS SECTION */
         .workflow-section {
             padding: 100px 0;
-            background: white;
+            background: transparent;
         }
         .workflow-step {
             text-align: center;
@@ -302,15 +372,23 @@ session_start();
         .step-icon {
             width: 80px; height: 80px;
             border-radius: 50%;
-            background: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             display: flex; align-items: center; justify-content: center;
             font-size: 2rem;
-            color: var(--primary-blue);
+            color: #38bdf8;
             margin: 0 auto 1.5rem auto;
             position: relative;
             z-index: 2;
-            border: 2px solid #e0f2fe;
+            border: 2px solid rgba(56, 189, 248, 0.5);
+            transition: all 0.5s ease;
+        }
+        .workflow-step:hover .step-icon {
+            transform: scale(1.15) rotate(360deg);
+            background: rgba(14, 165, 233, 0.2);
+            box-shadow: 0 0 25px rgba(14, 165, 233, 0.5);
+            border-color: #0ea5e9;
         }
         .step-arrow {
             position: absolute;
@@ -326,32 +404,12 @@ session_start();
             .workflow-step { margin-bottom: 2rem; }
         }
 
-        /* CTA SECTION */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-content {
-            position: relative;
-            z-index: 2;
-        }
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="40" fill="white" opacity="0.1"/><circle cx="80" cy="80" r="50" fill="white" opacity="0.1"/></svg>');
-            background-size: cover;
-            z-index: 1;
-        }
-
         /* FOOTER */
         footer {
-            background: #0f172a;
+            background: transparent;
             color: #94a3b8;
             padding: 80px 0 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         .footer-logo {
             font-family: 'Poppins', sans-serif;
@@ -368,8 +426,30 @@ session_start();
         }
         footer ul { list-style: none; padding: 0; }
         footer ul li { margin-bottom: 0.8rem; }
-        footer a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
-        footer a:hover { color: white; }
+        footer ul li a { 
+            color: #94a3b8; 
+            text-decoration: none; 
+            transition: color 0.3s;
+            position: relative;
+            display: inline-block;
+        }
+        footer ul li a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            transform-origin: bottom right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        footer ul li a:hover { color: white; }
+        footer ul li a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
         .social-icons a {
             display: inline-flex;
             align-items: center; justify-content: center;
@@ -378,9 +458,13 @@ session_start();
             background: rgba(255,255,255,0.1);
             color: white;
             margin-right: 10px;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .social-icons a:hover { background: var(--primary-blue); transform: translateY(-3px); }
+        .social-icons a:hover { 
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.4);
+        }
         .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.1);
             margin-top: 40px;
@@ -402,11 +486,18 @@ session_start();
     </style>
 </head>
 <body>
+    <!-- 3D Vanta Background Container -->
+    <div id="vanta-bg"></div>
+
     <!-- HERO SECTION / PORTAL -->
-    <section class="hero-section" id="home" style="padding: 0; display: flex; align-items: center; justify-content: center;">
-        <div class="mesh-bg"></div>
-        <div class="orb orb-1" style="background: rgba(0, 240, 255, 0.4);"></div>
-        <div class="orb orb-2" style="background: rgba(138, 43, 226, 0.4);"></div>
+    <section class="hero-section" id="home" style="padding: 0; display: flex; align-items: center; justify-content: center; background: transparent;">
+        <div class="animated-bg">
+            <div class="cell c1"><i class="bi bi-laptop"></i></div>
+            <div class="cell c2"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="cell c3"><i class="bi bi-check2-circle"></i></div>
+            <div class="cell c4"><i class="bi bi-calendar2-week"></i></div>
+            <div class="cell c5"><i class="bi bi-book"></i></div>
+        </div>
         
         <div class="container hero-content text-center floating-3d">
             
@@ -416,14 +507,14 @@ session_start();
                     <i class="bi bi-hexagon-fill" style="font-size: 4rem; color: var(--premium-accent); filter: drop-shadow(0 0 20px var(--premium-accent));"></i>
                 </div>
                 
-                <h1 class="hero-title mb-3 neon-text premium-text">Campus Nova</h1>
-                <p class="hero-desc mb-5 premium-text-muted" style="font-size: 1.2rem;">Next-Generation Smart Education Platform</p>
+                <h1 class="hero-title mb-3 neon-text premium-text" style="color: white; text-shadow: 0 0 10px rgba(255,255,255,0.3);">Campus Nova</h1>
+                <p class="hero-desc mb-5 premium-text-muted" style="font-size: 1.2rem; color: #cbd5e1 !important;">Next-Generation Smart Education Platform</p>
                 
-                <div class="d-flex flex-column gap-3 align-items-center">
-                    <a href="auth/login.php" class="btn btn-gradient btn-lg w-100 magnetic-btn btn-ripple-container" style="max-width: 320px; padding: 1.2rem; font-size: 1.1rem;">
+                <div class="d-flex flex-column gap-3 align-items-center position-relative" style="z-index: 10;">
+                    <a href="auth/login.php" class="btn btn-gradient btn-lg w-100 mt-2" style="max-width: 320px; padding: 1.2rem; font-size: 1.1rem;">
                         <i class="bi bi-box-arrow-in-right me-2"></i> Enter Portal
                     </a>
-                    <a href="auth/register.php" class="btn btn-lg w-100 magnetic-btn btn-ripple-container mt-4" style="max-width: 320px; padding: 1.2rem; font-size: 1.1rem; border: none; background: rgba(255,255,255,0.7); color: black !important; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 50px;">
+                    <a href="auth/register.php" class="btn btn-lg w-100 mt-2" style="max-width: 320px; padding: 1.2rem; font-size: 1.1rem; border: none; background: rgba(255,255,255,0.7); color: black !important; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 50px;">
                         <i class="bi bi-person-plus me-2"></i> Join as Student
                     </a>
                 </div>
@@ -440,22 +531,30 @@ session_start();
     <!-- STATISTICS SECTION -->
     <section class="stats-section">
         <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6 stat-item fade-in-up">
-                    <div class="stat-number">10k+</div>
-                    <div class="text-muted fw-bold">Active Students</div>
+            <div class="row g-3">
+                <div class="col-md-3 col-6 fade-in-up">
+                    <div class="stat-item h-100">
+                        <div class="stat-number">10k+</div>
+                        <div class="text-muted fw-bold">Active Students</div>
+                    </div>
                 </div>
-                <div class="col-md-3 col-sm-6 stat-item fade-in-up" style="transition-delay: 0.1s;">
-                    <div class="stat-number">500+</div>
-                    <div class="text-muted fw-bold">Expert Teachers</div>
+                <div class="col-md-3 col-6 fade-in-up" style="transition-delay: 0.1s;">
+                    <div class="stat-item h-100">
+                        <div class="stat-number">500+</div>
+                        <div class="text-muted fw-bold">Expert Teachers</div>
+                    </div>
                 </div>
-                <div class="col-md-3 col-sm-6 stat-item fade-in-up" style="transition-delay: 0.2s;">
-                    <div class="stat-number">99%</div>
-                    <div class="text-muted fw-bold">Attendance Rate</div>
+                <div class="col-md-3 col-6 fade-in-up" style="transition-delay: 0.2s;">
+                    <div class="stat-item h-100">
+                        <div class="stat-number">99%</div>
+                        <div class="text-muted fw-bold">Attendance Rate</div>
+                    </div>
                 </div>
-                <div class="col-md-3 col-sm-6 stat-item fade-in-up" style="transition-delay: 0.3s;">
-                    <div class="stat-number">24/7</div>
-                    <div class="text-muted fw-bold">Smart Access</div>
+                <div class="col-md-3 col-6 fade-in-up" style="transition-delay: 0.3s;">
+                    <div class="stat-item h-100">
+                        <div class="stat-number">24/7</div>
+                        <div class="text-muted fw-bold">Smart Access</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -529,15 +628,6 @@ session_start();
         </div>
     </section>
 
-    <!-- CTA SECTION -->
-    <section class="cta-section text-center">
-        <div class="container cta-content fade-in-up">
-            <h2 class="fw-bold mb-4" style="font-size: 3rem;">Ready to Transform Your Campus?</h2>
-            <p class="lead mb-5" style="max-width: 600px; margin: 0 auto; opacity: 0.9;">Join thousands of students and educators already experiencing the power of Campus Nova.</p>
-            <a href="auth/login.php" class="btn btn-light btn-lg px-5 py-3 fw-bold rounded-pill shadow" style="color: var(--primary-blue);">Get Started Now</a>
-        </div>
-    </section>
-
     <!-- FOOTER -->
     <footer>
         <div class="container">
@@ -584,11 +674,32 @@ session_start();
         </div>
     </footer>
 
-    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/animations.js"></script>
+    
+    <!-- Three.js and Vanta.js for 3D Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Initialize 3D Background
+            VANTA.NET({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x0ea5e9,
+                backgroundColor: 0x0f172a,
+                points: 12.00,
+                maxDistance: 22.00,
+                spacing: 16.00
+            });
+
             const animatedElements = document.querySelectorAll('.fade-in-up');
             setTimeout(() => {
                 animatedElements.forEach(el => el.classList.add('visible'));
