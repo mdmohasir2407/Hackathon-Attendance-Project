@@ -32,7 +32,7 @@ if ($class_id) {
         JOIN subjects s ON a.subject_id = s.id
         WHERE a.class_id = ? AND a.deadline >= NOW()
         AND a.id NOT IN (SELECT assignment_id FROM assignment_submissions WHERE student_id = ?)
-        ORDER BY a.deadline ASC
+        ORDER BY a.deadline ASC, a.id ASC
     ");
     $stmt->execute([$class_id, $student_id]);
     $pending_assignments = $stmt->fetchAll();

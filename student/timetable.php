@@ -97,7 +97,8 @@ $default_timings = [
                                             </div>
                                             <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
                                         <?php else: ?>
-                                            <div class="<?php echo ($cell_class == 'bg-primary text-white') ? 'text-white' : 'text-muted'; ?>"></div>
+                                            <div class="<?php echo ($cell_class == 'bg-primary text-white') ? 'text-white' : 'text-muted'; ?> fw-bold mb-1">Free Period</div>
+                                            <div class="small"><a href="planner.php" class="<?php echo ($cell_class == 'bg-primary text-white') ? 'text-white text-decoration-underline' : 'text-primary text-decoration-none'; ?>"><i class="bi bi-lightbulb-fill text-warning"></i> View Suggestion</a></div>
                                         <?php endif; ?>
                                     </td>
                                 <?php endforeach; ?>
