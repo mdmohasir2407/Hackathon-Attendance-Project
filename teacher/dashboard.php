@@ -80,7 +80,7 @@ $stats['total_students'] = $stmt->fetchColumn();
                             <?php echo isset($next_class['is_current']) ? 'Current Class' : 'Next Class'; ?>
                         </h4>
                         <p class="mb-0">
-                            <strong><?php echo htmlspecialchars($next_class['subject_code'] . ' - ' . $next_class['subject_name']); ?></strong> 
+                            <strong><?php echo htmlspecialchars($next_class['subject_name'] . ' (' . $next_class['subject_code'] . ')'); ?></strong> 
                             | Class: <?php echo htmlspecialchars($next_class['class_name']); ?> 
                             | Room: <?php echo htmlspecialchars($next_class['classroom']); ?>
                         </p>
@@ -118,7 +118,7 @@ $stats['total_students'] = $stmt->fetchColumn();
                     <li class="list-group-item <?php echo $list_class; ?> d-flex justify-content-between align-items-center">
                         <div>
                             <span class="badge bg-secondary me-2">Period <?php echo $class['period_number']; ?></span>
-                            <span class="fw-bold"><?php echo htmlspecialchars($class['subject_code']); ?></span>
+                            <span class="fw-bold"><?php echo htmlspecialchars($class['subject_name']); ?></span>
                             - <?php echo htmlspecialchars($class['class_name']); ?>
                             <small class="ms-2 d-block d-md-inline"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($class['classroom']); ?></small>
                         </div>
@@ -141,7 +141,7 @@ $stats['total_students'] = $stmt->fetchColumn();
                 <div class="card premium-glass-card tilt-card h-100 shadow-sm">
                     <div class="glare-effect"></div>
                     <div class="card-body text-center p-3">
-                        <h2 class="mb-0 count-up fw-bold neon-text premium-text" data-count="<?php echo $stats['my_classes']; ?>"><?php echo $stats['my_classes']; ?></h2>
+                        <h2 class="mb-0 fw-bold neon-text premium-text"><?php echo $stats['my_classes']; ?></h2>
                         <div class="small text-uppercase mt-2" style="letter-spacing: 1px; color: #0ea5e9;">My Classes</div>
                     </div>
                 </div>
@@ -150,7 +150,7 @@ $stats['total_students'] = $stmt->fetchColumn();
                 <div class="card premium-glass-card tilt-card h-100 shadow-sm">
                     <div class="glare-effect"></div>
                     <div class="card-body text-center p-3">
-                        <h2 class="mb-0 count-up fw-bold neon-text premium-text" data-count="<?php echo $stats['total_students']; ?>"><?php echo $stats['total_students']; ?></h2>
+                        <h2 class="mb-0 fw-bold neon-text premium-text"><?php echo $stats['total_students']; ?></h2>
                         <div class="small text-uppercase mt-2" style="letter-spacing: 1px; color: #10b981;">Total Students</div>
                     </div>
                 </div>

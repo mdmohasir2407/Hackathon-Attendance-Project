@@ -92,16 +92,12 @@ $default_timings = [
                                     ?>
                                     <td class="<?php echo $cell_class; ?>" style="min-width: 130px; height: 90px;">
                                         <?php if ($cell && !empty($cell['subject_id'])): ?>
-                                            <div class="fw-bold <?php echo ($cell_class == 'bg-primary text-white') ? 'text-white' : 'text-primary'; ?>">
-                                                <?php echo htmlspecialchars($cell['subject_code']); ?>
+                                            <div class="fw-bold premium-text text-wrap" style="font-size: 0.85rem; line-height: 1.2;">
+                                                <?php echo htmlspecialchars($cell['subject_name']); ?>
                                             </div>
-                                            <div class="small fw-semibold"><?php echo htmlspecialchars($cell['subject_name']); ?></div>
-                                            <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
-                                        <?php elseif ($cell && empty($cell['subject_id'])): ?>
-                                            <div class="text-danger fw-bold small fst-italic mb-2">TEST PERIOD</div>
                                             <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
                                         <?php else: ?>
-                                            <div class="<?php echo ($cell_class == 'bg-primary text-white') ? 'text-white' : 'text-muted'; ?> small fst-italic">Free Period</div>
+                                            <div class="<?php echo ($cell_class == 'bg-primary text-white') ? 'text-white' : 'text-muted'; ?>"></div>
                                         <?php endif; ?>
                                     </td>
                                 <?php endforeach; ?>

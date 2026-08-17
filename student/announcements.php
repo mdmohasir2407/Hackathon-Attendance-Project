@@ -3,6 +3,26 @@ require_once 'includes/header.php';
 
 $student_id = $_SESSION['user_id'];
 
+// Handle Mark as Received
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'mark_received') {
+    $author_id = $_POST['author_id'];
+    $title = $_POST['announcement_title'];
+    
+    $stu_stmt = $pdo->prepare("SELECT first_name, last_name, roll_number FROM students WHERE id = ?");
+    $stu_stmt->execute([$student_id]);
+    $student_info = $stu_stmt->fetch();
+    
+    if ($student_info) {
+        $student_name = $student_info['first_name'] . ' ' . $student_info['last_name'] . ' (' . $student_info['roll_number'] . ')';
+        $msg = "$student_name has acknowledged and marked your announcement '$title' as Received.";
+        
+        $ins = $pdo->prepare("INSERT INTO notifications (user_id, title, message, type) VALUES (?, ?, ?, ?)");
+        $ins->execute([$author_id, 'Announcement Received', $msg, 'Feedback']);
+        
+        $success_msg = "Successfully marked as received. The author has been notified.";
+    }
+}
+
 // Get student's class
 $stmt = $pdo->prepare("SELECT class_id FROM enrollments WHERE student_id = ?");
 $stmt->execute([$student_id]);
@@ -50,6 +70,13 @@ if ($class_id) {
     <h1 class="h2">Announcements Board</h1>
 </div>
 
+<?php if(isset($success_msg)): ?>
+    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> <?php echo $success_msg; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
 <div class="row">
     <div class="col-12">
         <div class="card shadow-sm border-0">
@@ -71,14 +98,24 @@ if ($class_id) {
                             </div>
                             <p class="mb-3 text-secondary" style="line-height: 1.6;"><?php echo nl2br(htmlspecialchars($a['content'])); ?></p>
                             
-                            <div class="d-flex align-items-center">
-                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
-                                    <i class="bi bi-person-fill text-secondary"></i>
+                            <div class="d-flex align-items-center justify-content-between mt-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                                        <i class="bi bi-person-fill text-secondary"></i>
+                                    </div>
+                                    <small class="text-muted">
+                                        Posted by <strong><?php echo htmlspecialchars($a['first_name'] . ' ' . $a['last_name']); ?></strong> 
+                                        <span class="badge bg-light text-secondary border ms-1"><?php echo ucfirst($a['role']); ?></span>
+                                    </small>
                                 </div>
-                                <small class="text-muted">
-                                    Posted by <strong><?php echo htmlspecialchars($a['first_name'] . ' ' . $a['last_name']); ?></strong> 
-                                    <span class="badge bg-light text-secondary border ms-1"><?php echo ucfirst($a['role']); ?></span>
-                                </small>
+                                <form method="POST" action="announcements.php" class="m-0">
+                                    <input type="hidden" name="action" value="mark_received">
+                                    <input type="hidden" name="author_id" value="<?php echo $a['user_id']; ?>">
+                                    <input type="hidden" name="announcement_title" value="<?php echo htmlspecialchars($a['title']); ?>">
+                                    <button type="submit" class="btn btn-sm btn-outline-success">
+                                        <i class="bi bi-check2-circle"></i> Mark as Received
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     <?php endforeach; ?>

@@ -57,19 +57,38 @@ $at_risk_students = $stmt->fetchAll();
 </div>
 
 <div class="row mb-4">
-    <div class="col-md-6">
+    <div class="col-md-4 mb-4 mb-md-0">
+        <div class="card shadow-sm h-100">
+            <div class="card-header">
+                <i class="bi bi-pie-chart me-1 text-success"></i> Overall Attendance Rate
+            </div>
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <div style="position: relative; width: 180px; height: 180px;">
+                    <canvas id="attendanceChart"></canvas>
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                        <h3 class="mb-0 fw-bold text-success"><?php echo $attendance_rate; ?>%</h3>
+                    </div>
+                </div>
+                <p class="text-muted mt-3 mb-0 text-center small">Average attendance across all your classes</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
         <div class="card shadow-sm h-100">
             <div class="card-header">
                 <i class="bi bi-graph-up me-1 text-primary"></i> Assignment Submissions by Subject
             </div>
             <div class="card-body">
-                <canvas id="perfChart" height="150"></canvas>
+                <canvas id="perfChart" height="200"></canvas>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-6">
-        <div class="card shadow-sm h-100 border-danger border-opacity-50">
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm border-danger border-opacity-50">
             <div class="card-header bg-danger text-white">
                 <i class="bi bi-exclamation-triangle-fill me-1"></i> Students Needing Attention
             </div>
@@ -84,6 +103,9 @@ $at_risk_students = $stmt->fetchAll();
                         <a href="feedback.php?student_id=<?php echo $s['id']; ?>" class="btn btn-sm btn-outline-warning">Send Feedback</a>
                     </li>
                     <?php endforeach; ?>
+                    <?php if(empty($at_risk_students)): ?>
+                        <li class="list-group-item p-4 text-center text-muted">No students currently flagged for attention.</li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -135,6 +157,29 @@ document.addEventListener("DOMContentLoaded", function() {
                         display: false
                     }
                 }
+            }
+        }
+    });
+
+    // Attendance Doughnut Chart
+    const ctxAtt = document.getElementById('attendanceChart').getContext('2d');
+    new Chart(ctxAtt, {
+        type: 'doughnut',
+        data: {
+            labels: ['Attended', 'Missed'],
+            datasets: [{
+                data: [<?php echo $attendance_rate; ?>, <?php echo max(0, 100 - $attendance_rate); ?>],
+                backgroundColor: ['#198754', '#e9ecef'],
+                borderWidth: 0,
+                cutout: '80%'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
             }
         }
     });

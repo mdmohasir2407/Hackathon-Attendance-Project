@@ -134,7 +134,7 @@ $default_timings = [
                                         <?php endif; ?>
                                         >
                                         <?php if ($cell && !empty($cell['subject_id'])): ?>
-                                            <div class="fw-bold text-primary"><?php echo htmlspecialchars($cell['subject_code']); ?></div>
+                                            <div class="fw-bold text-primary text-wrap" style="font-size: 0.85rem; line-height: 1.2;"><?php echo htmlspecialchars($cell['subject_name']); ?></div>
                                             <div class="small"><?php echo htmlspecialchars($cell['subject_name']); ?></div>
                                             <div class="small fst-italic mt-1 text-muted">
                                                 <?php echo $cell['teacher_id'] ? htmlspecialchars($cell['first_name'] . ' ' . $cell['last_name']) : 'No Teacher Assigned'; ?>
@@ -144,13 +144,11 @@ $default_timings = [
                                                 <i class="bi bi-pencil small"></i>
                                             </div>
                                         <?php elseif ($cell && empty($cell['subject_id'])): ?>
-                                            <div class="text-danger fw-bold small fst-italic mb-2">TEST PERIOD</div>
                                             <div class="small mt-1"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($cell['classroom']); ?></div>
                                             <div class="position-absolute top-0 end-0 m-1 text-muted" style="opacity: 0.5;">
                                                 <i class="bi bi-pencil small"></i>
                                             </div>
                                         <?php else: ?>
-                                            <div class="text-muted small fst-italic mb-2">FREE PERIOD</div>
                                             <div class="text-primary small fw-bold mt-2 opacity-75">
                                                 <i class="bi bi-plus"></i> Assign
                                             </div>
@@ -285,7 +283,7 @@ $default_timings = [
         });
 
         $('#autoGenerateBtn').on('click', function() {
-            if(confirm("Are you sure? This will OVERWRITE the current timetable for this class and automatically generate a new one with 3 tests, 3 free periods, and evenly distributed subjects.")) {
+            if(confirm("Are you sure? This will OVERWRITE the current timetable for this class and automatically generate a new one with 3 tests, and evenly distributed subjects.")) {
                 var classId = $(this).data('class');
                 $(this).prop('disabled', true).html('<i class="bi bi-hourglass-split"></i> Generating...');
                 

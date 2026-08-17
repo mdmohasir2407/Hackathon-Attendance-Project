@@ -130,11 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 
         // Pick 3 test periods
         $test_slots = array_splice($all_slots, 0, 3);
-        
-        // Pick 3 free periods
-        $free_slots = array_splice($all_slots, 0, 3);
 
-        // The rest are subject slots (36 slots)
+        // The rest are subject slots (39 slots)
         $subject_slots = $all_slots;
 
         // Insert Test Periods

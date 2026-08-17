@@ -76,43 +76,47 @@ $departments = $stmt->fetchAll();
     </div>
 <?php endif; ?>
 
-<div class="card shadow-sm">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Code</th>
-                        <th>Name</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($departments as $dept): ?>
-                    <tr>
-                        <td><?php echo $dept['id']; ?></td>
-                        <td><?php echo htmlspecialchars($dept['code']); ?></td>
-                        <td><?php echo htmlspecialchars($dept['name']); ?></td>
-                        <td><?php echo date('M d, Y', strtotime($dept['created_at'])); ?></td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary me-1 edit-btn" data-id="<?php echo $dept['id']; ?>" data-code="<?php echo htmlspecialchars($dept['code']); ?>" data-name="<?php echo htmlspecialchars($dept['name']); ?>">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            <a href="?delete=<?php echo $dept['id']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this department?');">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                    <?php if(empty($departments)): ?>
-                    <tr><td colspan="5" class="text-center">No departments found.</td></tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+<div class="row g-4">
+    <?php foreach($departments as $dept): ?>
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 animate-on-scroll fade-in-up">
+        <div class="card premium-glass-card tilt-card h-100 shadow-sm border-0 position-relative overflow-hidden" style="border-radius: 20px;">
+            <div class="glare-effect"></div>
+            <div class="card-body p-4 text-center d-flex flex-column">
+                <div class="hover-bounce-icon mb-3">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle shadow-sm" style="width: 80px; height: 80px; background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(139, 92, 246, 0.1)); border: 2px solid rgba(14, 165, 233, 0.3);">
+                        <i class="bi bi-building" style="font-size: 2.5rem; color: #0ea5e9; filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.4));"></i>
+                    </div>
+                </div>
+                
+                <h2 class="fw-bold premium-text mb-1 text-truncate" style="letter-spacing: 1px; font-size: 1.8rem;"><?php echo htmlspecialchars($dept['code']); ?></h2>
+                <h6 class="text-secondary fw-semibold mb-3 px-2 text-wrap" style="min-height: 2.5rem;"><?php echo htmlspecialchars($dept['name']); ?></h6>
+                
+                <div class="small text-muted mb-4 mt-auto">
+                    <i class="bi bi-clock-history me-1"></i> Since <?php echo date('M Y', strtotime($dept['created_at'])); ?>
+                </div>
+                
+                <div class="d-flex justify-content-center gap-2" style="position: relative; z-index: 5;">
+                    <button class="btn btn-outline-primary rounded-pill flex-grow-1 edit-btn fw-bold shadow-sm" data-id="<?php echo $dept['id']; ?>" data-code="<?php echo htmlspecialchars($dept['code']); ?>" data-name="<?php echo htmlspecialchars($dept['name']); ?>">
+                        <i class="bi bi-pencil-square me-1"></i> Edit
+                    </button>
+                    <a href="?delete=<?php echo $dept['id']; ?>" class="btn btn-outline-danger rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" onclick="return confirm('Are you sure you want to delete this department?');">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
+    <?php endforeach; ?>
+    
+    <?php if(empty($departments)): ?>
+    <div class="col-12 fade-in-up">
+        <div class="alert premium-glass-card shadow-sm text-center py-5 border-0">
+            <i class="bi bi-inbox fs-1 text-muted mb-3 d-block"></i>
+            <h4 class="text-secondary fw-bold">No Departments Found</h4>
+            <p class="text-muted mb-0">Click the "Add Department" button to create one.</p>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>
 
 <!-- Add Department Modal -->

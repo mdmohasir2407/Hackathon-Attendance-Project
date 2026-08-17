@@ -4,15 +4,23 @@ session_start();
 
 // If already logged in, redirect to dashboard based on role
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-    $role = $_SESSION['role'];
-    header("Location: ../{$role}/dashboard.php");
-    exit;
+    $requested_role = $_GET['role'] ?? null;
+    if ($requested_role && $requested_role !== $_SESSION['role']) {
+        // User wants to login as a different role, destroy current session
+        session_unset();
+        session_destroy();
+        session_start();
+    } else {
+        $role = $_SESSION['role'];
+        header("Location: ../{$role}/dashboard.php");
+        exit;
+    }
 }
 
 require_once '../config/database.php';
 
 $error = '';
-$selected_role = $_POST['role'] ?? '';
+$selected_role = $_POST['role'] ?? $_GET['role'] ?? '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email'] ?? '');
@@ -22,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($email) || empty($password) || empty($role)) {
         $error = 'Please fill in all fields and select a role.';
     } else {
-        $stmt = $pdo->prepare("SELECT id, password_hash, role FROM users WHERE email = :email AND role = :role");
+        $stmt = $pdo->prepare("SELECT id, password_hash, role, profile_pic FROM users WHERE email = :email AND role = :role");
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':role', $role, PDO::PARAM_STR);
         $stmt->execute();

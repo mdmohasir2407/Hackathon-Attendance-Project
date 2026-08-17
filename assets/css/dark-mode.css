@@ -144,3 +144,15 @@ body.dark-mode .list-group-item-action:focus {
     background-color: var(--border-color);
     color: var(--text-primary);
 }
+
+/* File input styling for dark mode */
+body.dark-mode input[type="file"].form-control {
+    color: var(--text-primary) !important;
+    background-color: #0f172a !important;
+}
+
+body.dark-mode input[type="file"].form-control::file-selector-button {
+    background-color: #1e293b;
+    color: #f8fafc;
+    border-right: 1px solid var(--border-color);
+}

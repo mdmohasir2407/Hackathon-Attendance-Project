@@ -1,15 +1,11 @@
 <?php
-require_once 'config/database.php';
-
-$stmt = $pdo->prepare("SELECT * FROM users WHERE email = 'mohasir65@nova.edu'");
-$stmt->execute();
-$user = $stmt->fetch();
-if ($user) {
-    if (password_verify('mohasir123', $user['password_hash'])) {
-        echo "Login SUCCESS for mohasir!\n";
-    } else {
-        echo "Wrong password.\n";
-    }
-} else {
-    echo "User not found.\n";
+require 'config/database.php';
+$stmt = $pdo->query("SELECT * FROM users WHERE role='student' LIMIT 1");
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+print_r($user);
+if($user) {
+    $name = explode('@', $user['email'])[0];
+    $name = preg_replace('/[0-9]+/', '', $name);
+    echo 'Expected pass: ' . $name . '123' . PHP_EOL;
+    echo 'Verifies? ' . (password_verify($name . '123', $user['password_hash']) ? 'YES' : 'NO') . PHP_EOL;
 }

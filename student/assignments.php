@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     $assignment_id = $_POST['assignment_id'];
     
     // Check if deadline passed
-    $chk = $pdo->prepare("SELECT deadline FROM assignments WHERE id = ?");
+    $chk = $pdo->prepare("SELECT deadline, title FROM assignments WHERE id = ?");
     $chk->execute([$assignment_id]);
     $assgn = $chk->fetch();
     $status = (strtotime($assgn['deadline']) < time()) ? 'LATE' : 'SUBMITTED';

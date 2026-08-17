@@ -98,12 +98,22 @@ foreach ($dept_ids as $code => $d_id) {
 }
 
 // 6. Create Subjects and map Teachers
+$subject_names_map = [
+    'MCA' => ['Programming in C', 'Database Management', 'Web Technologies', 'Software Engineering'],
+    'MBA' => ['Management Principles', 'Organizational Behavior', 'Managerial Economics', 'Financial Accounting'],
+    'CSE' => ['Data Structures', 'Operating Systems', 'Computer Networks', 'Artificial Intelligence'],
+    'IT'  => ['Object Oriented Programming', 'Software Testing', 'Cloud Computing', 'Cyber Security'],
+    'ECE' => ['Electronic Devices', 'Digital Logic', 'Signals and Systems', 'Microprocessors']
+];
+
 $subject_ids = [];
 foreach ($dept_ids as $code => $d_id) {
     $dept_teachers = $teacher_ids[$d_id];
+    $subjects = $subject_names_map[$code];
     for($i=0; $i<4; $i++) {
+        $subject_name = $subjects[$i];
         $pdo->prepare("INSERT INTO subjects (department_id, semester_id, name, code, credits) VALUES (?, ?, ?, ?, ?)")
-            ->execute([$d_id, $sem_id, "$code Core Subject " . ($i+1), "{$code}10" . ($i+1), 3]);
+            ->execute([$d_id, $sem_id, $subject_name, "{$code}10" . ($i+1), 3]);
         $sub_id = $pdo->lastInsertId();
         $subject_ids[$d_id][] = $sub_id;
         
@@ -139,8 +149,8 @@ foreach ($dept_ids as $code => $d_id) {
         $fname = $selected_students[$student_index];
         $roll = $code . "26" . str_pad($i, 3, '0', STR_PAD_LEFT);
         
-        // Ensure unique email by appending index
-        $email = $fname . $student_index . "@nova.edu";
+        // Ensure unique email by matching the credentials.txt format
+        $email = $fname . "65@nova.edu";
         $password = $fname . "123";
         $student_hash = password_hash($password, PASSWORD_DEFAULT);
         

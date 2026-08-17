@@ -36,7 +36,7 @@ $recent_logs = $stmt->fetchAll();
             <div class="glare-effect"></div>
             <div class="card-body">
                 <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #0ea5e9;">Total Students</h5>
-                <h2 class="display-4 count-up fw-bold neon-text" data-count="<?php echo $stats['students']; ?>"><?php echo $stats['students']; ?></h2>
+                <h2 class="display-4 fw-bold neon-text"><?php echo $stats['students']; ?></h2>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
                 <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="students.php">View Details</a>
@@ -49,7 +49,7 @@ $recent_logs = $stmt->fetchAll();
             <div class="glare-effect"></div>
             <div class="card-body">
                 <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #10b981;">Total Teachers</h5>
-                <h2 class="display-4 count-up fw-bold neon-text" data-count="<?php echo $stats['teachers']; ?>"><?php echo $stats['teachers']; ?></h2>
+                <h2 class="display-4 fw-bold neon-text"><?php echo $stats['teachers']; ?></h2>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
                 <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="teachers.php">View Details</a>
@@ -62,7 +62,7 @@ $recent_logs = $stmt->fetchAll();
             <div class="glare-effect"></div>
             <div class="card-body">
                 <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: #f59e0b;">Total Departments</h5>
-                <h2 class="display-4 count-up fw-bold neon-text" data-count="<?php echo $stats['departments']; ?>"><?php echo $stats['departments']; ?></h2>
+                <h2 class="display-4 fw-bold neon-text"><?php echo $stats['departments']; ?></h2>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between border-0 bg-transparent">
                 <a class="small premium-text stretched-link text-decoration-none magnetic-btn" href="departments.php">View Details</a>

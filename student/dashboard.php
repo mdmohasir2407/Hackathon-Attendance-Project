@@ -133,7 +133,7 @@ $recent_feedback = $stmt->fetchAll();
             <div class="card-body">
                 <h5 class="card-title text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 0.9rem; color: var(--premium-purple);">Next Class</h5>
                 <?php if ($next_class): ?>
-                    <h4 class="mb-0 text-truncate hover-bounce-icon fw-bold premium-text"><?php echo htmlspecialchars($next_class['subject_code']); ?></h4>
+                    <h4 class="mb-0 text-truncate hover-bounce-icon fw-bold premium-text"><?php echo htmlspecialchars($next_class['subject_name']); ?></h4>
                     <small class="opacity-75 premium-text-muted"><?php echo date('h:i A', strtotime($next_class['start_time'])); ?></small>
                 <?php else: ?>
                     <h4 class="hover-bounce-icon fw-bold premium-text">None</h4>
@@ -194,7 +194,7 @@ $recent_feedback = $stmt->fetchAll();
         <!-- Weekly Tests Card -->
         <?php
         $stmt = $pdo->prepare("
-            SELECT t.*, s.code as subject_code
+            SELECT t.*, s.code as subject_code, s.name as subject_name
             FROM tests t
             JOIN subjects s ON t.subject_id = s.id
             JOIN enrollments e ON t.class_id = e.class_id
@@ -217,8 +217,8 @@ $recent_feedback = $stmt->fetchAll();
                             <span class="badge bg-primary rounded-pill"><?php echo htmlspecialchars($ut['test_period']); ?></span>
                             <span class="small text-muted"><?php echo $ut['scheduled_date'] ? date('M d', strtotime($ut['scheduled_date'])) : 'Soon'; ?></span>
                         </div>
-                        <h6 class="mb-1 mt-1 fw-bold"><?php echo htmlspecialchars($ut['title']); ?></h6>
-                        <div class="small text-muted mb-2"><?php echo htmlspecialchars($ut['subject_code']); ?> &bull; <?php echo $ut['duration_minutes']; ?> mins</div>
+                        <h6 class="mb-1 mt-1 fw-bold"><?php echo htmlspecialchars($ut['title'] ?? 'Test'); ?></h6>
+                        <div class="small text-muted mb-2"><?php echo htmlspecialchars($ut['subject_name'] ?? 'Unknown Subject'); ?> &bull; <?php echo isset($ut['duration_minutes']) ? $ut['duration_minutes'] : '45'; ?> mins</div>
                         <a href="tests.php?action=take&id=<?php echo $ut['id']; ?>" class="btn btn-sm btn-outline-primary w-100 rounded-pill">Start Test</a>
                     </div>
                 <?php endforeach; ?>

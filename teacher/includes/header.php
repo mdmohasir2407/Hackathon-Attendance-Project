@@ -7,6 +7,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
     exit;
 }
 require_once '../config/database.php';
+
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = FALSE");
+$stmt->execute([$_SESSION['user_id']]);
+$unread_notifications = $stmt->fetchColumn();
 ?>
 <!DOCTYPE html>
 <html lang="en">

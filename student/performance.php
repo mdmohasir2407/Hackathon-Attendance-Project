@@ -50,19 +50,23 @@ if ($class_id) {
     }
 }
 
-// 3. Subject-wise Feedback sentiment (mock logic based on feedback types)
-$stmt = $pdo->prepare("
-    SELECT sub.name, 
-           SUM(CASE WHEN f.feedback_type = 'Excellent' THEN 1 ELSE 0 END) as pos,
-           SUM(CASE WHEN f.feedback_type = 'Improving' THEN 1 ELSE 0 END) as neu,
-           SUM(CASE WHEN f.feedback_type = 'Needs Practice' THEN 1 ELSE 0 END) as neg
-    FROM feedback f
-    JOIN subjects sub ON f.subject_id = sub.id
-    WHERE f.student_id = ?
-    GROUP BY sub.id
-");
-$stmt->execute([$student_id]);
-$feedback_perf = $stmt->fetchAll();
+// 3. Subject-wise Feedback sentiment
+$feedback_perf = [];
+if ($class_id) {
+    $stmt = $pdo->prepare("
+        SELECT sub.name, 
+               COALESCE(SUM(CASE WHEN f.feedback_type = 'Excellent' THEN 1 ELSE 0 END), 0) as pos,
+               COALESCE(SUM(CASE WHEN f.feedback_type = 'Improving' THEN 1 ELSE 0 END), 0) as neu,
+               COALESCE(SUM(CASE WHEN f.feedback_type = 'Needs Practice' THEN 1 ELSE 0 END), 0) as neg
+        FROM subjects sub
+        JOIN classes c ON sub.department_id = c.department_id AND sub.semester_id = c.semester_id
+        LEFT JOIN feedback f ON sub.id = f.subject_id AND f.student_id = ?
+        WHERE c.id = ?
+        GROUP BY sub.id
+    ");
+    $stmt->execute([$student_id, $class_id]);
+    $feedback_perf = $stmt->fetchAll();
+}
 
 $fb_labels = [];
 $fb_data_pos = [];

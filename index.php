@@ -534,13 +534,13 @@ session_start();
             <div class="row g-3">
                 <div class="col-md-3 col-6 fade-in-up">
                     <div class="stat-item h-100">
-                        <div class="stat-number">10k+</div>
+                        <div class="stat-number">100+</div>
                         <div class="text-muted fw-bold">Active Students</div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 fade-in-up" style="transition-delay: 0.1s;">
                     <div class="stat-item h-100">
-                        <div class="stat-number">500+</div>
+                        <div class="stat-number">20+</div>
                         <div class="text-muted fw-bold">Expert Teachers</div>
                     </div>
                 </div>
@@ -654,9 +654,9 @@ session_start();
                 <div class="col-lg-2 col-md-4 mb-4">
                     <h5>Portals</h5>
                     <ul>
-                        <li><a href="auth/login.php">Student Portal</a></li>
-                        <li><a href="auth/login.php">Teacher Portal</a></li>
-                        <li><a href="auth/login.php">Admin Panel</a></li>
+                        <li><a href="auth/login.php?role=student">Student Portal</a></li>
+                        <li><a href="auth/login.php?role=teacher">Teacher Portal</a></li>
+                        <li><a href="auth/login.php?role=admin">Admin Panel</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-4 mb-4">
