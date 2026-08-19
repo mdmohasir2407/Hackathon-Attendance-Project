@@ -35,8 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':role', $role, PDO::PARAM_STR);
         $stmt->execute();
         
-        if ($stmt->rowCount() > 0) {
-            $user = $stmt->fetch();
+        $user = $stmt->fetch();
+        if ($user) {
             if (password_verify($password, $user['password_hash'])) {
                 // Password is correct, start a new session
                 session_regenerate_id(true);
